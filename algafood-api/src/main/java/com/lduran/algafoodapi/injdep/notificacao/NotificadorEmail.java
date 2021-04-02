@@ -1,11 +1,9 @@
 package com.lduran.algafoodapi.injdep.notificacao;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.lduran.algafoodapi.injdep.model.Cliente;
 
-@Profile("prod")
 @TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
 @Component
 public class NotificadorEmail implements Notificador
