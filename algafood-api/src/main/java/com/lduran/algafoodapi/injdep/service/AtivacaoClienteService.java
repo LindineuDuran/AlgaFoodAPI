@@ -1,11 +1,8 @@
 package com.lduran.algafoodapi.injdep.service;
 
-import org.springframework.stereotype.Component;
-
 import com.lduran.algafoodapi.injdep.model.Cliente;
 import com.lduran.algafoodapi.injdep.notificacao.Notificador;
 
-@Component
 public class AtivacaoClienteService
 {
 	private Notificador notificador;
