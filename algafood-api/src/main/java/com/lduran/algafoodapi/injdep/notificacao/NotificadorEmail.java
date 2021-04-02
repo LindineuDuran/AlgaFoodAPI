@@ -1,11 +1,10 @@
 package com.lduran.algafoodapi.injdep.notificacao;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.lduran.algafoodapi.injdep.model.Cliente;
 
-@Qualifier("normal")
+@TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
 @Component
 public class NotificadorEmail implements Notificador
 {
