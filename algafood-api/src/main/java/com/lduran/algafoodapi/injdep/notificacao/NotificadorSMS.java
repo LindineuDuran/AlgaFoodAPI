@@ -1,9 +1,11 @@
 package com.lduran.algafoodapi.injdep.notificacao;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import com.lduran.algafoodapi.injdep.model.Cliente;
 
+@Primary
 @Component
 public class NotificadorSMS implements Notificador
 {
