@@ -1,5 +1,7 @@
 package com.lduran.algafoodapi.injdep.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,20 +11,16 @@ import com.lduran.algafoodapi.injdep.notificacao.Notificador;
 @Component
 public class AtivacaoClienteService
 {
-	@Autowired(required = false)
-	private Notificador notificador;
+	@Autowired
+	private List<Notificador> notificadores;
 
 	public void ativar(Cliente cliente)
 	{
 		cliente.ativar();
 
-		if (notificador != null)
+		notificadores.forEach(n ->
 		{
-			this.notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
-		}
-		else
-		{
-			System.out.println("Não existe notificador, mas cliente foi ativado");
-		}
+			n.notificar(cliente, "Seu cadastro no sistema está ativo!");
+		});
 	}
 }
