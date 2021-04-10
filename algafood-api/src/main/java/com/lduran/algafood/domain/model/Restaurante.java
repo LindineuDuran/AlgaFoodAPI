@@ -12,7 +12,6 @@ public class Restaurante
 	@Id
 	private Long id;
 
-	@Column(name = "nome", length = 30)
 	private String nome;
 
 	@Column(name = "taxa_frete")
