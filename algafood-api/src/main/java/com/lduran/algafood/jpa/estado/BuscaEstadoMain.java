@@ -1,28 +1,24 @@
-package com.lduran.algafood.jpa;
+package com.lduran.algafood.jpa.estado;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
 import com.lduran.algafood.AlgafoodApiApplication;
-import com.lduran.algafood.domain.model.Cozinha;
-import com.lduran.algafood.domain.repository.CozinhaRepository;
+import com.lduran.algafood.domain.model.Estado;
+import com.lduran.algafood.domain.repository.EstadoRepository;
 
-public class ExclusaoCozinhaMain
+public class BuscaEstadoMain
 {
 	public static void main(String[] args)
 	{
 		ApplicationContext applicationContext = new SpringApplicationBuilder(AlgafoodApiApplication.class)
 				.web(WebApplicationType.NONE).run(args);
 
-		CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
+		EstadoRepository estados = applicationContext.getBean(EstadoRepository.class);
 
-		Cozinha cozinha = new Cozinha();
-		cozinha.setId(1L);
+		Estado estado = estados.porId(1L);
 
-		cozinhas.remover(cozinha);
-
-		System.out.printf("%d - %s\n", cozinha.getId(), cozinha.getNome());
+		System.out.println(estado.getNome());
 	}
-
 }

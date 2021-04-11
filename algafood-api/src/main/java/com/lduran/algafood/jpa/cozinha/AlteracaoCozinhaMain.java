@@ -1,6 +1,4 @@
-package com.lduran.algafood.jpa;
-
-import java.util.List;
+package com.lduran.algafood.jpa.cozinha;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,7 +8,7 @@ import com.lduran.algafood.AlgafoodApiApplication;
 import com.lduran.algafood.domain.model.Cozinha;
 import com.lduran.algafood.domain.repository.CozinhaRepository;
 
-public class ConsultaCozinhaMain
+public class AlteracaoCozinhaMain
 {
 	public static void main(String[] args)
 	{
@@ -19,12 +17,13 @@ public class ConsultaCozinhaMain
 
 		CozinhaRepository cozinhas = applicationContext.getBean(CozinhaRepository.class);
 
-		List<Cozinha> todasCozinhas = cozinhas.todas();
+		Cozinha cozinha = new Cozinha();
+		cozinha.setId(1L);
+		cozinha.setNome("Brasileira");
 
-		todasCozinhas.forEach(c ->
-		{
-			System.out.println(c.getNome());
-		});
+		cozinha = cozinhas.adicionar(cozinha);
+
+		System.out.printf("%d - %s\n", cozinha.getId(), cozinha.getNome());
 	}
 
 }

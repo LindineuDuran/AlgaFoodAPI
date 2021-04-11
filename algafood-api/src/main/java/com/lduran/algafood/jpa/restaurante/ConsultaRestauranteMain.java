@@ -1,4 +1,6 @@
-package com.lduran.algafood.jpa;
+package com.lduran.algafood.jpa.restaurante;
+
+import java.util.List;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -8,7 +10,7 @@ import com.lduran.algafood.AlgafoodApiApplication;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.repository.RestauranteRepository;
 
-public class BuscaRestauranteMain
+public class ConsultaRestauranteMain
 {
 	public static void main(String[] args)
 	{
@@ -17,9 +19,12 @@ public class BuscaRestauranteMain
 
 		RestauranteRepository restaurantes = applicationContext.getBean(RestauranteRepository.class);
 
-		Restaurante restaurante = restaurantes.porId(5L);
+		List<Restaurante> todosRestaurantes = restaurantes.todos();
 
-		System.out.println(restaurante.getNome());
+		todosRestaurantes.forEach(r ->
+		{
+			System.out.printf("%s - %f - %s\n", r.getNome(), r.getTaxaFrete(), r.getCozinha().getNome());
+		});
 	}
 
 }

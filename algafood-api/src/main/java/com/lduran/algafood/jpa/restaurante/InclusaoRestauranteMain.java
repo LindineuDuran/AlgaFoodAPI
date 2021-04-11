@@ -1,4 +1,4 @@
-package com.lduran.algafood.jpa;
+package com.lduran.algafood.jpa.restaurante;
 
 import java.math.BigDecimal;
 

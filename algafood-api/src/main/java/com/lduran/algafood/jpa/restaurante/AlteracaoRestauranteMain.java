@@ -1,6 +1,4 @@
-package com.lduran.algafood.jpa;
-
-import java.util.List;
+package com.lduran.algafood.jpa.restaurante;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,7 +8,7 @@ import com.lduran.algafood.AlgafoodApiApplication;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.repository.RestauranteRepository;
 
-public class ConsultaRestauranteMain
+public class AlteracaoRestauranteMain
 {
 	public static void main(String[] args)
 	{
@@ -19,12 +17,13 @@ public class ConsultaRestauranteMain
 
 		RestauranteRepository restaurantes = applicationContext.getBean(RestauranteRepository.class);
 
-		List<Restaurante> todosRestaurantes = restaurantes.todos();
+		Restaurante restaurante = new Restaurante();
+		restaurante.setId(1L);
+		restaurante.setNome("Cantina da Nena");
 
-		todosRestaurantes.forEach(r ->
-		{
-			System.out.printf("%s - %f - %s\n", r.getNome(), r.getTaxaFrete(), r.getCozinha().getNome());
-		});
+		restaurante = restaurantes.adicionar(restaurante);
+
+		System.out.printf("%d - %s\n", restaurante.getId(), restaurante.getNome());
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.lduran.algafood.jpa;
+package com.lduran.algafood.jpa.restaurante;
 
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -8,7 +8,7 @@ import com.lduran.algafood.AlgafoodApiApplication;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.repository.RestauranteRepository;
 
-public class AlteracaoRestauranteMain
+public class ExclusaoRestauranteMain
 {
 	public static void main(String[] args)
 	{
@@ -19,9 +19,8 @@ public class AlteracaoRestauranteMain
 
 		Restaurante restaurante = new Restaurante();
 		restaurante.setId(1L);
-		restaurante.setNome("Cantina da Nena");
 
-		restaurante = restaurantes.adicionar(restaurante);
+		restaurantes.remover(restaurante);
 
 		System.out.printf("%d - %s\n", restaurante.getId(), restaurante.getNome());
 	}
