@@ -19,7 +19,7 @@ public class AlteracaoRestauranteMain
 
 		Restaurante restaurante = new Restaurante();
 		restaurante.setId(1L);
-		restaurante.setNome("Brasileira");
+		restaurante.setNome("Cantina da Nena");
 
 		restaurante = restaurantes.adicionar(restaurante);
 

@@ -1,5 +1,7 @@
 package com.lduran.algafood.jpa;
 
+import java.math.BigDecimal;
+
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -18,10 +20,12 @@ public class InclusaoRestauranteMain
 		RestauranteRepository restaurantes = applicationContext.getBean(RestauranteRepository.class);
 
 		Restaurante restaurante1 = new Restaurante();
-		restaurante1.setNome("Brasileira");
+		restaurante1.setNome("Cantina da Nena");
+		restaurante1.setTaxaFrete(new BigDecimal(9.5));
 
 		Restaurante restaurante2 = new Restaurante();
-		restaurante2.setNome("Japonesa");
+		restaurante2.setNome("Restaurante do Sujinho");
+		restaurante2.setTaxaFrete(new BigDecimal(7.5));
 
 		restaurante1 = restaurantes.adicionar(restaurante1);
 		restaurante2 = restaurantes.adicionar(restaurante2);
