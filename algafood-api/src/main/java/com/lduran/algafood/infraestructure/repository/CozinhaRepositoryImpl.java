@@ -29,6 +29,18 @@ public class CozinhaRepositoryImpl implements CozinhaRepository
 		return manager.find(Cozinha.class, id);
 	}
 
+	@Override
+	public boolean existe(long id)
+	{
+		Cozinha cozinha = this.manager.find(Cozinha.class, id);
+		if (cozinha != null)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 	@Transactional
 	@Override
 	public Cozinha adicionar(Cozinha cozinha)

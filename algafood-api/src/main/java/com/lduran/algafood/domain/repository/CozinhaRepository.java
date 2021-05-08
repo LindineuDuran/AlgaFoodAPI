@@ -10,6 +10,8 @@ public interface CozinhaRepository
 
 	Cozinha porId(long id);
 
+	boolean existe(long id);
+
 	Cozinha adicionar(Cozinha cozinha);
 
 	void remover(Cozinha cozinha);
