@@ -6,13 +6,13 @@ import com.lduran.algafood.domain.model.Cozinha;
 
 public interface CozinhaRepository
 {
-	List<Cozinha> todas();
+	List<Cozinha> listar();
 
-	Cozinha porId(long id);
+	Cozinha buscar(long id);
 
 	boolean existe(long id);
 
-	Cozinha adicionar(Cozinha cozinha);
+	Cozinha salvar(Cozinha cozinha);
 
-	void remover(Cozinha cozinha);
+	void remover(long id);
 }

@@ -3,7 +3,6 @@ package com.lduran.algafood.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,56 +17,62 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lduran.algafood.api.model.CozinhasXmlWrapper;
+import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
+import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cozinha;
-import com.lduran.algafood.domain.repository.CozinhaRepository;
+import com.lduran.algafood.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController
 {
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private CadastroCozinhaService cadastroCozinha;
 
 	@GetMapping
 	public ResponseEntity<List<Cozinha>> listar()
 	{
-		return ResponseEntity.ok(cozinhaRepository.todas());
+		return ResponseEntity.ok(cadastroCozinha.listar());
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<CozinhasXmlWrapper> listarXml()
+	public CozinhasXmlWrapper listarXml()
 	{
-		return ResponseEntity.ok(new CozinhasXmlWrapper(cozinhaRepository.todas()));
+		return new CozinhasXmlWrapper(cadastroCozinha.listar());
 	}
 
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId)
 	{
-		if (!this.cozinhaRepository.existe(cozinhaId))
+		Cozinha cozinha = cadastroCozinha.buscar(cozinhaId);
+
+		if (cozinha != null)
 		{
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.ok(cozinha);
 		}
 
-		return ResponseEntity.ok(this.cozinhaRepository.porId(cozinhaId));
+		return ResponseEntity.notFound().build();
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha)
 	{
-		return ResponseEntity.ok(cozinhaRepository.adicionar(cozinha));
+		return ResponseEntity.ok(cadastroCozinha.salvar(cozinha));
 	}
 
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha)
 	{
-		if (!this.cozinhaRepository.existe(cozinhaId))
+		Cozinha cozinhaAtual = cadastroCozinha.buscar(cozinhaId);
+
+		if (cozinhaAtual != null)
 		{
-			return ResponseEntity.notFound().build();
+			cozinha.setId(cozinhaId);
+			return ResponseEntity.ok(cadastroCozinha.salvar(cozinha));
 		}
 
-		cozinha.setId(cozinhaId);
-		return ResponseEntity.ok(cozinhaRepository.adicionar(cozinha));
+		return ResponseEntity.notFound().build();
 	}
 
 	@DeleteMapping("/{cozinhaId}")
@@ -75,17 +80,14 @@ public class CozinhaController
 	{
 		try
 		{
-			if (!this.cozinhaRepository.existe(cozinhaId))
-			{
-				return ResponseEntity.notFound().build();
-			}
-
-			Cozinha cozinha = cozinhaRepository.porId(cozinhaId);
-			cozinhaRepository.remover(cozinha);
-
+			cadastroCozinha.remover(cozinhaId);
 			return ResponseEntity.noContent().build();
 		}
-		catch (DataIntegrityViolationException e)
+		catch (EntidadeNaoEncontradaException e)
+		{
+			return ResponseEntity.notFound().build();
+		}
+		catch (EntidadeEmUsoException e)
 		{
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
