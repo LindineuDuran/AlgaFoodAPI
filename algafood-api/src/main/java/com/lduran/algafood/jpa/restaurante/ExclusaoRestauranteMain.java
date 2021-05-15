@@ -20,9 +20,8 @@ public class ExclusaoRestauranteMain
 		Restaurante restaurante = new Restaurante();
 		restaurante.setId(1L);
 
-		restaurantes.remover(restaurante);
+		restaurantes.remover(restaurante.getId());
 
 		System.out.printf("%d - %s\n", restaurante.getId(), restaurante.getNome());
 	}
-
 }

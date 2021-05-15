@@ -27,8 +27,8 @@ public class InclusaoRestauranteMain
 		restaurante2.setNome("Restaurante do Sujinho");
 		restaurante2.setTaxaFrete(new BigDecimal(7.5));
 
-		restaurante1 = restaurantes.adicionar(restaurante1);
-		restaurante2 = restaurantes.adicionar(restaurante2);
+		restaurante1 = restaurantes.salvar(restaurante1);
+		restaurante2 = restaurantes.salvar(restaurante2);
 
 		System.out.printf("%d - %s\n", restaurante1.getId(), restaurante1.getNome());
 		System.out.printf("%d - %s\n", restaurante2.getId(), restaurante2.getNome());

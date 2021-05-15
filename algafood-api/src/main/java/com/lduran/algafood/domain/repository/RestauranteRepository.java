@@ -6,11 +6,11 @@ import com.lduran.algafood.domain.model.Restaurante;
 
 public interface RestauranteRepository
 {
-	List<Restaurante> todos();
+	List<Restaurante> listar();
 
-	Restaurante porId(long id);
+	Restaurante buscar(long id);
 
-	Restaurante adicionar(Restaurante restaurante);
+	Restaurante salvar(Restaurante restaurante);
 
-	void remover(Restaurante restaurante);
+	void remover(long id);
 }

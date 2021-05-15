@@ -21,7 +21,7 @@ public class AlteracaoRestauranteMain
 		restaurante.setId(1L);
 		restaurante.setNome("Cantina da Nena");
 
-		restaurante = restaurantes.adicionar(restaurante);
+		restaurante = restaurantes.salvar(restaurante);
 
 		System.out.printf("%d - %s\n", restaurante.getId(), restaurante.getNome());
 	}

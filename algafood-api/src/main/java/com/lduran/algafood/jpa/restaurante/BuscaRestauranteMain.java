@@ -17,7 +17,7 @@ public class BuscaRestauranteMain
 
 		RestauranteRepository restaurantes = applicationContext.getBean(RestauranteRepository.class);
 
-		Restaurante restaurante = restaurantes.porId(5L);
+		Restaurante restaurante = restaurantes.buscar(5L);
 
 		System.out.println(restaurante.getNome());
 	}

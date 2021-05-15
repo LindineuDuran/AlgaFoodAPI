@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lduran.algafood.api.model.CozinhasXmlWrapper;
 import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cozinha;
@@ -35,14 +33,8 @@ public class CozinhaController
 		return ResponseEntity.ok(cadastroCozinha.listar());
 	}
 
-	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-	public CozinhasXmlWrapper listarXml()
-	{
-		return new CozinhasXmlWrapper(cadastroCozinha.listar());
-	}
-
 	@GetMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId)
+	public ResponseEntity<Cozinha> buscar(@PathVariable long cozinhaId)
 	{
 		Cozinha cozinha = cadastroCozinha.buscar(cozinhaId);
 
@@ -62,7 +54,7 @@ public class CozinhaController
 	}
 
 	@PutMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha)
+	public ResponseEntity<Cozinha> atualizar(@PathVariable long cozinhaId, @RequestBody Cozinha cozinha)
 	{
 		Cozinha cozinhaAtual = cadastroCozinha.buscar(cozinhaId);
 
@@ -76,7 +68,7 @@ public class CozinhaController
 	}
 
 	@DeleteMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId)
+	public ResponseEntity<Cozinha> remover(@PathVariable long cozinhaId)
 	{
 		try
 		{
