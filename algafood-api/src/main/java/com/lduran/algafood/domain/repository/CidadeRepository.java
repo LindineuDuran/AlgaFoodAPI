@@ -6,11 +6,11 @@ import com.lduran.algafood.domain.model.Cidade;
 
 public interface CidadeRepository
 {
-	List<Cidade> todas();
+	List<Cidade> listar();
 
-	Cidade porId(long id);
+	Cidade buscar(long id);
 
-	Cidade adicionar(Cidade cidade);
+	Cidade salvar(Cidade cidade);
 
-	void remover(Cidade cidade);
+	void remover(long id);
 }

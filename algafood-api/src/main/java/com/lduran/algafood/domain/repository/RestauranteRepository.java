@@ -8,9 +8,9 @@ public interface RestauranteRepository
 {
 	List<Restaurante> listar();
 
-	Restaurante buscar(long id);
+	Restaurante buscar(Long id);
 
 	Restaurante salvar(Restaurante restaurante);
 
-	void remover(long id);
+	void remover(Long id);
 }

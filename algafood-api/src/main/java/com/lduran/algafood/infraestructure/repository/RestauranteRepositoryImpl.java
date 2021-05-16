@@ -25,7 +25,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepository
 	}
 
 	@Override
-	public Restaurante buscar(long id)
+	public Restaurante buscar(Long id)
 	{
 		return manager.find(Restaurante.class, id);
 	}
@@ -39,7 +39,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepository
 
 	@Transactional
 	@Override
-	public void remover(long id)
+	public void remover(Long id)
 	{
 		Restaurante restaurante = buscar(id);
 
@@ -48,6 +48,6 @@ public class RestauranteRepositoryImpl implements RestauranteRepository
 			throw new EmptyResultDataAccessException(1);
 		}
 
-		manager.remove(id);
+		manager.remove(restaurante);
 	}
 }

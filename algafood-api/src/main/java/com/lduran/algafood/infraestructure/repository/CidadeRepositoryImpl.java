@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,29 +19,35 @@ public class CidadeRepositoryImpl implements CidadeRepository
 	private EntityManager manager;
 
 	@Override
-	public List<Cidade> todas()
+	public List<Cidade> listar()
 	{
 		return manager.createQuery("from Cidade", Cidade.class).getResultList();
 	}
 
 	@Override
-	public Cidade porId(long id)
+	public Cidade buscar(long id)
 	{
 		return manager.find(Cidade.class, id);
 	}
 
 	@Transactional
 	@Override
-	public Cidade adicionar(Cidade cidade)
+	public Cidade salvar(Cidade cidade)
 	{
 		return manager.merge(cidade);
 	}
 
 	@Transactional
 	@Override
-	public void remover(Cidade cidade)
+	public void remover(long id)
 	{
-		cidade = porId(cidade.getId());
+		Cidade cidade = buscar(id);
+
+		if (cidade == null)
+		{
+			throw new EmptyResultDataAccessException(1);
+		}
+
 		manager.remove(cidade);
 	}
 }

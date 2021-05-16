@@ -28,7 +28,7 @@ public class CadastroRestauranteService
 		return restauranteRepository.listar();
 	}
 
-	public Restaurante buscar(long restauranteId)
+	public Restaurante buscar(Long restauranteId)
 	{
 		return this.restauranteRepository.buscar(restauranteId);
 	}
@@ -47,7 +47,7 @@ public class CadastroRestauranteService
 		return restauranteRepository.salvar(restaurante);
 	}
 
-	public void remover(long restauranteId)
+	public void remover(Long restauranteId)
 	{
 		try
 		{

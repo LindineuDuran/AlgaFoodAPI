@@ -16,42 +16,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.lduran.algafood.domain.model.Restaurante;
-import com.lduran.algafood.domain.service.CadastroRestauranteService;
+import com.lduran.algafood.domain.model.Cidade;
+import com.lduran.algafood.domain.service.CadastroCidadeService;
 
 @RestController
-@RequestMapping("/restaurantes")
-public class RestauranteController
+@RequestMapping("/cidades")
+public class CidadeController
 {
 	@Autowired
-	private CadastroRestauranteService cadastroRestaurante;
+	private CadastroCidadeService cadastroCidade;
 
 	@GetMapping
-	public ResponseEntity<List<Restaurante>> listar()
+	public ResponseEntity<List<Cidade>> listar()
 	{
-		return ResponseEntity.ok(cadastroRestaurante.listar());
+		return ResponseEntity.ok(cadastroCidade.listar());
 	}
 
-	@GetMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> buscar(@PathVariable Long restauranteId)
+	@GetMapping("/{cidadeId}")
+	public ResponseEntity<Cidade> buscar(@PathVariable long cidadeId)
 	{
-		Restaurante restaurante = cadastroRestaurante.buscar(restauranteId);
+		Cidade cidade = cadastroCidade.buscar(cidadeId);
 
-		if (restaurante != null)
+		if (cidade != null)
 		{
-			return ResponseEntity.ok(restaurante);
+			return ResponseEntity.ok(cidade);
 		}
 
 		return ResponseEntity.notFound().build();
 	}
 
 	@PostMapping
-	public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante)
+	public ResponseEntity<?> adicionar(@RequestBody Cidade cidade)
 	{
 		try
 		{
-			restaurante = cadastroRestaurante.salvar(restaurante);
-			return ResponseEntity.status(HttpStatus.CREATED).body(restaurante);
+			cidade = cadastroCidade.salvar(cidade);
+			return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
 		}
 		catch (EntidadeNaoEncontradaException e)
 		{
@@ -59,17 +59,17 @@ public class RestauranteController
 		}
 	}
 
-	@PutMapping("/{restauranteId}")
-	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante)
+	@PutMapping("/{cidadeId}")
+	public ResponseEntity<?> atualizar(@PathVariable long cidadeId, @RequestBody Cidade cidade)
 	{
 		try
 		{
-			Restaurante restauranteAtual = cadastroRestaurante.buscar(restauranteId);
+			Cidade cidadeAtual = cadastroCidade.buscar(cidadeId);
 
-			if (restauranteAtual != null)
+			if (cidadeAtual != null)
 			{
-				restaurante.setId(restauranteId);
-				return ResponseEntity.ok(cadastroRestaurante.salvar(restaurante));
+				cidade.setId(cidadeId);
+				return ResponseEntity.ok(cadastroCidade.salvar(cidade));
 			}
 
 			return ResponseEntity.notFound().build();
@@ -80,12 +80,12 @@ public class RestauranteController
 		}
 	}
 
-	@DeleteMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> remover(@PathVariable Long restauranteId)
+	@DeleteMapping("/{cidadeId}")
+	public ResponseEntity<Cidade> remover(@PathVariable long cidadeId)
 	{
 		try
 		{
-			cadastroRestaurante.remover(restauranteId);
+			cadastroCidade.remover(cidadeId);
 			return ResponseEntity.noContent().build();
 		}
 		catch (EntidadeNaoEncontradaException e)

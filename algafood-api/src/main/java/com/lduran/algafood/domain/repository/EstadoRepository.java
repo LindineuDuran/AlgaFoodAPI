@@ -6,11 +6,11 @@ import com.lduran.algafood.domain.model.Estado;
 
 public interface EstadoRepository
 {
-	List<Estado> todos();
+	List<Estado> listar();
 
-	Estado porId(long id);
+	Estado buscar(long id);
 
-	Estado adicionar(Estado estado);
+	Estado salvar(Estado estado);
 
-	void remover(Estado estado);
+	void remover(long id);
 }
