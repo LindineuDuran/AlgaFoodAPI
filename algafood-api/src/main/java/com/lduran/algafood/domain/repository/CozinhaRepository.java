@@ -8,6 +8,8 @@ public interface CozinhaRepository
 {
 	List<Cozinha> listar();
 
+	List<Cozinha> consultarPorNome(String nome);
+
 	Cozinha buscar(long id);
 
 	boolean existe(long id);
