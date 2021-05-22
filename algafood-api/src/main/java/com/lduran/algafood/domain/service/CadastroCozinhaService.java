@@ -20,24 +20,25 @@ public class CadastroCozinhaService
 
 	public List<Cozinha> listar()
 	{
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 
 	public Cozinha buscar(long cozinhaId)
 	{
-		return this.cozinhaRepository.buscar(cozinhaId);
+		return this.cozinhaRepository.findById(cozinhaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format("Não existe um cadastro de cozinha de código %d", cozinhaId)));
 	}
 
 	public Cozinha salvar(Cozinha cozinha)
 	{
-		return cozinhaRepository.salvar(cozinha);
+		return cozinhaRepository.save(cozinha);
 	}
 
 	public void remover(long cozinhaId)
 	{
 		try
 		{
-			cozinhaRepository.remover(cozinhaId);
+			cozinhaRepository.deleteById(cozinhaId);
 		}
 		catch (EmptyResultDataAccessException e)
 		{

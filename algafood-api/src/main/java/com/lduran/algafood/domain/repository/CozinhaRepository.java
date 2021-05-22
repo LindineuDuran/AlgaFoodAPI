@@ -2,19 +2,13 @@ package com.lduran.algafood.domain.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.lduran.algafood.domain.model.Cozinha;
 
-public interface CozinhaRepository
+public interface CozinhaRepository extends JpaRepository<Cozinha, Long>
 {
-	List<Cozinha> listar();
+	List<Cozinha> findByNome(String nome);
 
-	List<Cozinha> consultarPorNome(String nome);
-
-	Cozinha buscar(long id);
-
-	boolean existe(long id);
-
-	Cozinha salvar(Cozinha cozinha);
-
-	void remover(long id);
+	List<Cozinha> findByNomeContaining(String nome);
 }

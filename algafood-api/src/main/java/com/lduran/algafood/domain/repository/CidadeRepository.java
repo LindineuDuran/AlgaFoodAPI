@@ -1,16 +1,10 @@
 package com.lduran.algafood.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.lduran.algafood.domain.model.Cidade;
 
-public interface CidadeRepository
+public interface CidadeRepository extends JpaRepository<Cidade, Long>
 {
-	List<Cidade> listar();
 
-	Cidade buscar(long id);
-
-	Cidade salvar(Cidade cidade);
-
-	void remover(long id);
 }

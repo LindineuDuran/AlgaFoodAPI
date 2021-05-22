@@ -22,6 +22,6 @@ public class TesteController
 	@GetMapping("/cozinhas/por-nome")
 	public ResponseEntity<List<Cozinha>> cozinhasPorNome(@RequestParam String nome)
 	{
-		return ResponseEntity.ok(cozinhaRepository.consultarPorNome(nome));
+		return ResponseEntity.ok(cozinhaRepository.findByNome(nome));
 	}
 }

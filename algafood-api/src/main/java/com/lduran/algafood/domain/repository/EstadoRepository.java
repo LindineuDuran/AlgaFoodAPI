@@ -1,16 +1,10 @@
 package com.lduran.algafood.domain.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.lduran.algafood.domain.model.Estado;
 
-public interface EstadoRepository
+public interface EstadoRepository extends JpaRepository<Estado, Long>
 {
-	List<Estado> listar();
 
-	Estado buscar(long id);
-
-	Estado salvar(Estado estado);
-
-	void remover(long id);
 }
