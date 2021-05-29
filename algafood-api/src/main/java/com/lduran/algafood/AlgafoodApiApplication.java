@@ -2,11 +2,17 @@ package com.lduran.algafood;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import com.lduran.algafood.infrastructure.repository.CustomJpaRepositoryImpl;
 
 @SpringBootApplication
-public class AlgafoodApiApplication {
+@EnableJpaRepositories(repositoryBaseClass = CustomJpaRepositoryImpl.class)
+public class AlgafoodApiApplication
+{
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		SpringApplication.run(AlgafoodApiApplication.class, args);
 	}
 

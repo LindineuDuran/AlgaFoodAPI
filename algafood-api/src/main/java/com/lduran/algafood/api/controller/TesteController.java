@@ -2,6 +2,7 @@ package com.lduran.algafood.api.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -66,5 +67,23 @@ public class TesteController
 			BigDecimal taxaFreteFinal)
 	{
 		return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+	}
+
+	@GetMapping("/restaurantes/com-frete-gratis")
+	public List<Restaurante> restaurantesComFreteGratis(String nome)
+	{
+		return restauranteRepository.findComFreteGratis(nome);
+	}
+
+	@GetMapping("/restaurantes/primeiro")
+	public Optional<Restaurante> restaurantesPrimeiro()
+	{
+		return restauranteRepository.buscarPrimeiro();
+	}
+
+	@GetMapping("/cozinhas/primeira")
+	public Optional<Cozinha> cozinhasPrimeira()
+	{
+		return cozinhaRepository.buscarPrimeiro();
 	}
 }
