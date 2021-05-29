@@ -46,7 +46,7 @@ public class TesteController
 	@GetMapping("/restaurantes/por-nome-e-cozinha")
 	public ResponseEntity<List<Restaurante>> restaurantesPorNomeECozinha(String nome, Long cozinhaId)
 	{
-		return ResponseEntity.ok(restauranteRepository.findByNomeContainingAndCozinhaId(nome, cozinhaId));
+		return ResponseEntity.ok(restauranteRepository.buscarNomeCozinhaId(nome, cozinhaId));
 	}
 
 	@GetMapping("/restaurantes/primeiro-por-nome")
@@ -59,5 +59,12 @@ public class TesteController
 	public ResponseEntity<List<Restaurante>> restaurantesTop2PorNome(String nome)
 	{
 		return ResponseEntity.ok(restauranteRepository.findTop2ByNomeContaining(nome));
+	}
+
+	@GetMapping("/restaurantes/por-nome-e-frete")
+	public List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial,
+			BigDecimal taxaFreteFinal)
+	{
+		return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
 	}
 }
