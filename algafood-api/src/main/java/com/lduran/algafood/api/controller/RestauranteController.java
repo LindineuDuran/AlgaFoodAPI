@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,8 +74,9 @@ public class RestauranteController
 
 			if (restauranteAtual != null)
 			{
-				restaurante.setId(restauranteId);
-				return ResponseEntity.ok(cadastroRestaurante.salvar(restaurante));
+				BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento");
+				restauranteAtual = cadastroRestaurante.salvar(restauranteAtual);
+				return ResponseEntity.ok(restauranteAtual);
 			}
 
 			return ResponseEntity.notFound().build();
