@@ -11,17 +11,19 @@ import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cozinha;
 import com.lduran.algafood.domain.model.Restaurante;
-import com.lduran.algafood.domain.repository.CozinhaRepository;
 import com.lduran.algafood.domain.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService
 {
+	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removido, pois está em uso";
+	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe um cadastro de restaurante de código %d";
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private CadastroCozinhaService cadastroCozinha;
 
 	public List<Restaurante> listar()
 	{
@@ -30,22 +32,14 @@ public class CadastroRestauranteService
 
 	public Restaurante buscar(Long restauranteId)
 	{
-		return this.restauranteRepository.findById(restauranteId).orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe um cadastro de restaurante de código %d", restauranteId)));
+		return this.restauranteRepository.findById(restauranteId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
 	}
 
 	public Restaurante salvar(Restaurante restaurante)
 	{
 		long cozinhaId = restaurante.getCozinha().getId();
-		Cozinha cozinha = this.cozinhaRepository.findById(cozinhaId)
-				.orElseThrow(() -> new EntidadeNaoEncontradaException(
-						String.format("Não existe um cadastro de cozinha de código %d", cozinhaId)));
-
-		if (cozinha == null)
-		{
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de cozinha de código %d", cozinhaId));
-		}
+		Cozinha cozinha = cadastroCozinha.buscar(cozinhaId);
 
 		restaurante.setCozinha(cozinha);
 
@@ -60,13 +54,11 @@ public class CadastroRestauranteService
 		}
 		catch (EmptyResultDataAccessException e)
 		{
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de restaurante de código %d", restauranteId));
+			throw new EntidadeNaoEncontradaException(String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
 		}
 		catch (DataIntegrityViolationException e)
 		{
-			throw new EntidadeEmUsoException(
-					String.format("Restaurante de código %d não pode ser removido, pois está em uso", restauranteId));
+			throw new EntidadeEmUsoException(String.format(MSG_RESTAURANTE_EM_USO, restauranteId));
 		}
 	}
 }

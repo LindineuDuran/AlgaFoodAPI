@@ -2,6 +2,7 @@ package com.lduran.algafood.api.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
-import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Estado;
 import com.lduran.algafood.domain.service.CadastroEstadoService;
 
@@ -34,16 +33,9 @@ public class EstadoController
 	}
 
 	@GetMapping("/{estadoId}")
-	public ResponseEntity<Estado> buscar(@PathVariable long estadoId)
+	public Estado buscar(@PathVariable long estadoId)
 	{
-		Estado estado = cadastroEstado.buscar(estadoId);
-
-		if (estado != null)
-		{
-			return ResponseEntity.ok(estado);
-		}
-
-		return ResponseEntity.notFound().build();
+		return cadastroEstado.buscar(estadoId);
 	}
 
 	@PostMapping
@@ -54,34 +46,18 @@ public class EstadoController
 	}
 
 	@PutMapping("/{estadoId}")
-	public ResponseEntity<Estado> atualizar(@PathVariable long estadoId, @RequestBody Estado estado)
+	public Estado atualizar(@PathVariable long estadoId, @RequestBody Estado estado)
 	{
 		Estado estadoAtual = cadastroEstado.buscar(estadoId);
 
-		if (estadoAtual != null)
-		{
-			estado.setId(estadoId);
-			return ResponseEntity.ok(cadastroEstado.salvar(estado));
-		}
+		BeanUtils.copyProperties(estado, estadoAtual, "id");
 
-		return ResponseEntity.notFound().build();
+		return cadastroEstado.salvar(estadoAtual);
 	}
 
 	@DeleteMapping("/{estadoId}")
-	public ResponseEntity<Estado> remover(@PathVariable long estadoId)
+	public void remover(@PathVariable long estadoId)
 	{
-		try
-		{
-			cadastroEstado.remover(estadoId);
-			return ResponseEntity.noContent().build();
-		}
-		catch (EntidadeNaoEncontradaException e)
-		{
-			return ResponseEntity.notFound().build();
-		}
-		catch (EntidadeEmUsoException e)
-		{
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
+		cadastroEstado.remover(estadoId);
 	}
 }

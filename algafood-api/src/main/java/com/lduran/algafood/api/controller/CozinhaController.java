@@ -2,6 +2,7 @@ package com.lduran.algafood.api.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,16 +33,9 @@ public class CozinhaController
 	}
 
 	@GetMapping("/{cozinhaId}")
-	public ResponseEntity<Cozinha> buscar(@PathVariable long cozinhaId)
+	public Cozinha buscar(@PathVariable long cozinhaId)
 	{
-		Cozinha cozinha = cadastroCozinha.buscar(cozinhaId);
-
-		if (cozinha != null)
-		{
-			return ResponseEntity.ok(cozinha);
-		}
-
-		return ResponseEntity.notFound().build();
+		return cadastroCozinha.buscar(cozinhaId);
 	}
 
 	@PostMapping
@@ -56,7 +50,8 @@ public class CozinhaController
 	{
 		Cozinha cozinhaAtual = cadastroCozinha.buscar(cozinhaId);
 
-		cozinha.setId(cozinhaId);
+		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+
 		return cadastroCozinha.salvar(cozinha);
 	}
 

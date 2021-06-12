@@ -12,16 +12,19 @@ import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cidade;
 import com.lduran.algafood.domain.model.Estado;
 import com.lduran.algafood.domain.repository.CidadeRepository;
-import com.lduran.algafood.domain.repository.EstadoRepository;
 
 @Service
 public class CadastroCidadeService
 {
+	private static final String MSG_CIDADE_EM_USO = "Cidade de código %d não pode ser removida, pois está em uso";
+
+	private static final String MSG_CIDADE_NÃO_ENCONTRADA = "Não existe um cadastro de cidade de código %d";
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
 
 	@Autowired
-	private EstadoRepository estadoRepository;
+	private CadastroEstadoService cadastroEstado;
 
 	public List<Cidade> listar()
 	{
@@ -30,15 +33,14 @@ public class CadastroCidadeService
 
 	public Cidade buscar(long cidadeId)
 	{
-		return this.cidadeRepository.findById(cidadeId).orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe um cadastro de cidade de código %d", cidadeId)));
+		return this.cidadeRepository.findById(cidadeId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(String.format(MSG_CIDADE_NÃO_ENCONTRADA, cidadeId)));
 	}
 
 	public Cidade salvar(Cidade cidade)
 	{
 		long estadoId = cidade.getEstado().getId();
-		Estado estado = estadoRepository.findById(estadoId).orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe um cadastro de estado de código %d", estadoId)));
+		Estado estado = cadastroEstado.buscar(estadoId);
 
 		cidade.setEstado(estado);
 
@@ -53,13 +55,11 @@ public class CadastroCidadeService
 		}
 		catch (EmptyResultDataAccessException e)
 		{
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de cidade de código %d", cidadeId));
+			throw new EntidadeNaoEncontradaException(String.format(MSG_CIDADE_NÃO_ENCONTRADA, cidadeId));
 		}
 		catch (DataIntegrityViolationException e)
 		{
-			throw new EntidadeEmUsoException(
-					String.format("Cidade de código %d não pode ser removida, pois está em uso", cidadeId));
+			throw new EntidadeEmUsoException(String.format(MSG_CIDADE_EM_USO, cidadeId));
 		}
 	}
 }
