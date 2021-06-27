@@ -1,4 +1,4 @@
-package com.lduran.algafood;
+package com.lduran.algafood.core.validation;
 
 public interface Groups
 {
