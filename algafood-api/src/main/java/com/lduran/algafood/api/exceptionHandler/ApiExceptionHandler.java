@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.lduran.algafood.core.validation.ValidacaoException;
 import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.exception.NegocioException;
@@ -115,6 +116,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler
 		Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+
+	@ExceptionHandler(ValidacaoException.class)
+	public ResponseEntity<?> handleValidacaoException(ValidacaoException ex, WebRequest request)
+	{
+		return handleValidationInternal(ex, ex.getBidingResult(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
 	}
 
 	@ExceptionHandler(NegocioException.class)
@@ -214,11 +221,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request)
 	{
+		return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
+	}
+
+	private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult,
+			HttpHeaders headers, HttpStatus status, WebRequest request)
+	{
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 
 		String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
-
-		BindingResult bindingResult = ex.getBindingResult();
 
 		List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream().map(objectError ->
 		{
