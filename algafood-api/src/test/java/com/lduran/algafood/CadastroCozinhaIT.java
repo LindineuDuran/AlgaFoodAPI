@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.http.HttpStatus;
-import org.flywaydb.core.Flyway;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,7 @@ import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cozinha;
 import com.lduran.algafood.domain.service.CadastroCozinhaService;
+import com.lduran.algafood.util.DatabaseCleaner;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -38,7 +38,7 @@ public class CadastroCozinhaIT
 	private int port;
 
 	@Autowired
-	private Flyway flyway;
+	private DatabaseCleaner databaseCleaner;
 
 	@Test
 	public void contextLoads()
@@ -100,7 +100,8 @@ public class CadastroCozinhaIT
 		RestAssured.basePath = "/cozinhas";
 		RestAssured.port = port;
 
-		flyway.migrate();
+		databaseCleaner.clearTables();
+		prepararDados();
 	}
 
 	@Test
@@ -112,8 +113,8 @@ public class CadastroCozinhaIT
 	@Test
 	public void deveRetornarStatus200_QuandoConsultarCozinhas_EncontraCozinhasEspecificas()
 	{
-		RestAssured.given().accept(ContentType.JSON).when().get().then().body("", Matchers.hasSize(7)).body("nome",
-				Matchers.hasItems("Indiana", "Tailandesa"));
+		RestAssured.given().accept(ContentType.JSON).when().get().then().body("", Matchers.hasSize(2)).body("nome",
+				Matchers.hasItems("Americana", "Tailandesa"));
 	}
 
 	@Test
@@ -121,5 +122,16 @@ public class CadastroCozinhaIT
 	{
 		RestAssured.given().body("{\"nome\": \"Chinesa\"}").contentType(ContentType.JSON).accept(ContentType.JSON)
 				.when().post().then().statusCode(HttpStatus.SC_CREATED);
+	}
+
+	private void prepararDados()
+	{
+		Cozinha cozinha1 = new Cozinha();
+		cozinha1.setNome("Tailandesa");
+		cadastroCozinha.salvar(cozinha1);
+
+		Cozinha cozinha2 = new Cozinha();
+		cozinha2.setNome("Americana");
+		cadastroCozinha.salvar(cozinha2);
 	}
 }
