@@ -4,7 +4,7 @@ CREATE TABLE estado (
     PRIMARY KEY (id)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8;
 
-insert into estado (nome) select distinct nome_estado from algafood.cidade;
+insert into estado (nome) select distinct nome_estado from cidade;
 
 alter table cidade add column estado_id bigint not null;
 
