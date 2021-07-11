@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
+import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cozinha;
 import com.lduran.algafood.domain.repository.CozinhaRepository;
 import com.lduran.algafood.domain.service.CadastroCozinhaService;
@@ -58,6 +60,24 @@ public class CadastroCozinhaIntegrationTests
 
 			// ação
 			novaCozinha = cadastroCozinha.salvar(novaCozinha);
+		});
+	}
+
+	@Test
+	public void deveFalharQuandoExcluirCozinhaEmUso()
+	{
+		assertThrows(EntidadeEmUsoException.class, () ->
+		{
+			cadastroCozinha.remover(1L);
+		});
+	}
+
+	@Test
+	public void deveFalharQuandoExcluirCozinhaInexistente()
+	{
+		assertThrows(EntidadeNaoEncontradaException.class, () ->
+		{
+			cadastroCozinha.remover(10L);
 		});
 	}
 }
