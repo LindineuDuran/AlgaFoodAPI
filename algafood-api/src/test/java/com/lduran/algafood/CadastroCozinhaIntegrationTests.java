@@ -1,6 +1,10 @@
-package com.lduran.algafoodapi;
+package com.lduran.algafood;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +42,22 @@ public class CadastroCozinhaIntegrationTests
 		// ação
 		novaCozinha = cadastroCozinha.salvar(novaCozinha);
 
-//		// validação
-//		Assertions.assertThat(novaCozinha).isNotNull();
-//		Assertions.assertThat(novaCozinha.getId()).isNotNull();
+		// validação
+		assertThat(novaCozinha).isNotNull();
+		assertThat(novaCozinha.getId()).isNotNull();
+	}
+
+	@Test
+	public void testarCadastroCozinhaSemNome()
+	{
+		assertThrows(ConstraintViolationException.class, () ->
+		{
+			// cenário
+			Cozinha novaCozinha = new Cozinha();
+			novaCozinha.setNome(null);
+
+			// ação
+			novaCozinha = cadastroCozinha.salvar(novaCozinha);
+		});
 	}
 }
