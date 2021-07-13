@@ -1,8 +1,11 @@
 package com.lduran.algafood;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.math.BigDecimal;
 
 import javax.validation.ConstraintViolationException;
 
@@ -20,8 +23,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.model.Cozinha;
+import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.service.CadastroCozinhaService;
+import com.lduran.algafood.domain.service.CadastroRestauranteService;
 import com.lduran.algafood.util.DatabaseCleaner;
+import com.lduran.algafood.util.ResourceUtils;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -34,11 +40,25 @@ public class CadastroCozinhaIT
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 
+	@Autowired
+	private CadastroRestauranteService cadastroRestaurante;
+
 	@LocalServerPort
 	private int port;
 
+	private int quantidadeCozinhas;
+
+	private String novaCozinha;
+
+	private Cozinha cozinhaAmericana;
+
+	private int COZINHA_ID_INEXISTENTE = 100;
+
 	@Autowired
 	private DatabaseCleaner databaseCleaner;
+
+	@Autowired
+	private ResourceUtils resourceUtils;
 
 	@Test
 	public void contextLoads()
@@ -111,17 +131,38 @@ public class CadastroCozinhaIT
 	}
 
 	@Test
+	public void deveRetornarQuantidadeDeCozinhas_QuandoConsultarCozinhas()
+	{
+		RestAssured.given().accept(ContentType.JSON).when().get().then().body("", Matchers.hasSize(quantidadeCozinhas));
+	}
+
+	@Test
 	public void deveRetornarStatus200_QuandoConsultarCozinhas_EncontraCozinhasEspecificas()
 	{
-		RestAssured.given().accept(ContentType.JSON).when().get().then().body("", Matchers.hasSize(2)).body("nome",
-				Matchers.hasItems("Americana", "Tailandesa"));
+		RestAssured.given().accept(ContentType.JSON).when().get().then().body("", Matchers.hasSize(quantidadeCozinhas))
+				.body("nome", Matchers.hasItems("Americana", "Tailandesa"));
 	}
 
 	@Test
 	public void deveRetornarStatus201_QuandoCadastrarCozinhass()
 	{
-		RestAssured.given().body("{\"nome\": \"Chinesa\"}").contentType(ContentType.JSON).accept(ContentType.JSON)
-				.when().post().then().statusCode(HttpStatus.SC_CREATED);
+		RestAssured.given().body(novaCozinha).contentType(ContentType.JSON).accept(ContentType.JSON).when().post()
+				.then().statusCode(HttpStatus.SC_CREATED);
+	}
+
+	@Test
+	public void deveRetornarRespostaEStatusCorretos_QuandoConsultarCozinhaExistente()
+	{
+		RestAssured.given().pathParam("cozinhaId", cozinhaAmericana.getId()).accept(ContentType.JSON).when()
+				.get("/{cozinhaId}").then().statusCode(HttpStatus.SC_OK)
+				.body("nome", equalTo(cozinhaAmericana.getNome()));
+	}
+
+	@Test
+	public void deveRetornarStatus404_QuandoConsultarCozinhaInexistente()
+	{
+		RestAssured.given().pathParam("cozinhaId", COZINHA_ID_INEXISTENTE).accept(ContentType.JSON).when()
+				.get("/{cozinhaId}").then().statusCode(HttpStatus.SC_NOT_FOUND);
 	}
 
 	private void prepararDados()
@@ -133,5 +174,18 @@ public class CadastroCozinhaIT
 		Cozinha cozinha2 = new Cozinha();
 		cozinha2.setNome("Americana");
 		cadastroCozinha.salvar(cozinha2);
+
+		cozinhaAmericana = cozinha2;
+
+		Restaurante restaurante1 = new Restaurante();
+		restaurante1.setNome("Thai Delivery");
+		restaurante1.setTaxaFrete(new BigDecimal("10.0"));
+		restaurante1.setCozinha(cozinha1);
+		cadastroRestaurante.salvar(restaurante1);
+
+		var cozinhas = cadastroCozinha.listar();
+		quantidadeCozinhas = cozinhas.size();
+
+		novaCozinha = resourceUtils.getContentFromResource("/json/correto/cozinha-chinesa.json");
 	}
 }
