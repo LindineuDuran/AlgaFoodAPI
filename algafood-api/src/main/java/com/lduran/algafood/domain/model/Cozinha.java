@@ -12,21 +12,21 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lduran.algafood.core.validation.Groups;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
 @Data
-@JsonRootName("cozinha")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 public class Cozinha
 {
-	@Id
+
 	@NotNull(groups = Groups.CozinhaId.class)
 	@EqualsAndHashCode.Include
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -34,6 +34,8 @@ public class Cozinha
 	@Column(nullable = false)
 	private String nome;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "cozinha")
 	private List<Restaurante> restaurantes = new ArrayList<>();
+
 }
