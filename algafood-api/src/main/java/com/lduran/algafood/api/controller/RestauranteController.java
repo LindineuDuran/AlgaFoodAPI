@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lduran.algafood.api.model.CozinhaModel;
 import com.lduran.algafood.api.model.RestauranteModel;
+import com.lduran.algafood.api.model.input.CozinhaIdInput;
 import com.lduran.algafood.api.model.input.RestauranteInputModel;
 import com.lduran.algafood.core.validation.ValidacaoException;
 import com.lduran.algafood.domain.exception.CozinhaNaoEncontradaException;
@@ -110,7 +111,7 @@ public class RestauranteController
 
 		validate(restauranteAtual, "restaurante");
 
-		return atualizar(restauranteId, restauranteAtual);
+		return atualizar(restauranteId, toInputModel(restauranteAtual));
 	}
 
 	@DeleteMapping("/{restauranteId}")
@@ -185,6 +186,23 @@ public class RestauranteController
 		restauranteModel.setCozinha(cozinhaModel);
 
 		return restauranteModel;
+	}
+
+	/**
+	 * @param restaurante
+	 * @return
+	 */
+	private RestauranteInputModel toInputModel(Restaurante restaurante)
+	{
+		CozinhaIdInput cozinhaIdInput = new CozinhaIdInput();
+		cozinhaIdInput.setId(restaurante.getCozinha().getId());
+
+		RestauranteInputModel restauranteInputModel = new RestauranteInputModel();
+		restauranteInputModel.setNome(restaurante.getNome());
+		restauranteInputModel.setTaxaFrete(restaurante.getTaxaFrete());
+		restauranteInputModel.setCozinha(cozinhaIdInput);
+
+		return restauranteInputModel;
 	}
 
 	private List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes)
