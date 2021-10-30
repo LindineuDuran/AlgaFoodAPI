@@ -21,7 +21,10 @@ public class RestauranteInputModelDisAssembler
 
 	public void copyToDomainObject(RestauranteInputModel restauranteInputModel, Restaurante restaurante)
 	{
+		// Para evitar: Caused by: org.hibernate.HibernateException: identifier of an
+		// instance of com.lduran.algafood.domain.model.Cozinha was altered from 3 to 5
 		restaurante.setCozinha(new Cozinha());
+
 		modelMapper.map(restauranteInputModel, restaurante);
 	}
 }
