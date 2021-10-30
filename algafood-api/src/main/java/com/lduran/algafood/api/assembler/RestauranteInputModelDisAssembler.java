@@ -1,5 +1,7 @@
 package com.lduran.algafood.api.assembler;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lduran.algafood.api.model.input.RestauranteInputModel;
@@ -9,16 +11,17 @@ import com.lduran.algafood.domain.model.Restaurante;
 @Component
 public class RestauranteInputModelDisAssembler
 {
+	@Autowired
+	private ModelMapper modelMapper;
+
 	public Restaurante toDomainObject(RestauranteInputModel restauranteInput)
 	{
-		Cozinha cozinha = new Cozinha();
-		cozinha.setId(restauranteInput.getCozinha().getId());
+		return modelMapper.map(restauranteInput, Restaurante.class);
+	}
 
-		Restaurante restaurante = new Restaurante();
-		restaurante.setNome(restauranteInput.getNome());
-		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
-		restaurante.setCozinha(cozinha);
-
-		return restaurante;
+	public void copyToDomainObject(RestauranteInputModel restauranteInputModel, Restaurante restaurante)
+	{
+		restaurante.setCozinha(new Cozinha());
+		modelMapper.map(restauranteInputModel, restaurante);
 	}
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.flywaydb.core.internal.util.ExceptionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,11 +90,13 @@ public class RestauranteController
 	{
 		try
 		{
-			Restaurante restaurante = disassembler.toDomainObject(restauranteInput);
+//			Restaurante restaurante = disassembler.toDomainObject(restauranteInput);
 			Restaurante restauranteAtual = cadastroRestaurante.buscar(restauranteId);
 
-			BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
-					"produtos");
+			disassembler.copyToDomainObject(restauranteInput, restauranteAtual);
+
+//			BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
+//					"produtos");
 
 			return assembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 		}
