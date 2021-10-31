@@ -122,6 +122,20 @@ public class RestauranteController
 		cadastroRestaurante.remover(restauranteId);
 	}
 
+	@PutMapping("/{restauranteId}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativar(@PathVariable Long restauranteId)
+	{
+		cadastroRestaurante.ativar(restauranteId);
+	}
+
+	@DeleteMapping("/{restauranteId}/inativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativar(@PathVariable Long restauranteId)
+	{
+		cadastroRestaurante.inativar(restauranteId);
+	}
+
 	private void validate(Restaurante restaurante, String objectName)
 	{
 		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
