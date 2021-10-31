@@ -90,13 +90,9 @@ public class RestauranteController
 	{
 		try
 		{
-//			Restaurante restaurante = disassembler.toDomainObject(restauranteInput);
 			Restaurante restauranteAtual = cadastroRestaurante.buscar(restauranteId);
 
 			disassembler.copyToDomainObject(restauranteInput, restauranteAtual);
-
-//			BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro",
-//					"produtos");
 
 			return assembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 		}

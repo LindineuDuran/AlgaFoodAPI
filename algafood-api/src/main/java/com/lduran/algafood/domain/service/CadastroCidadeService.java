@@ -52,6 +52,9 @@ public class CadastroCidadeService
 		try
 		{
 			cidadeRepository.deleteById(cidadeId);
+
+			// Libera todas as alterações pendentes no banco de dados.
+			cidadeRepository.flush();
 		}
 		catch (EmptyResultDataAccessException e)
 		{

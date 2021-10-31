@@ -43,6 +43,9 @@ public class CadastroEstadoService
 		try
 		{
 			estadoRepository.deleteById(estadoId);
+
+			// Libera todas as alterações pendentes no banco de dados.
+			estadoRepository.flush();
 		}
 		catch (EmptyResultDataAccessException e)
 		{

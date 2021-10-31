@@ -44,6 +44,9 @@ public class CadastroCozinhaService
 		try
 		{
 			cozinhaRepository.deleteById(cozinhaId);
+
+			// Libera todas as alterações pendentes no banco de dados.
+			cozinhaRepository.flush();
 		}
 		catch (EmptyResultDataAccessException e)
 		{

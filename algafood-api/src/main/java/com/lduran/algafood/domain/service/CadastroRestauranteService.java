@@ -53,6 +53,9 @@ public class CadastroRestauranteService
 		try
 		{
 			restauranteRepository.deleteById(restauranteId);
+
+			// Libera todas as alterações pendentes no banco de dados.
+			restauranteRepository.flush();
 		}
 		catch (EmptyResultDataAccessException e)
 		{
