@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lduran.algafood.domain.exception.EntidadeEmUsoException;
 import com.lduran.algafood.domain.exception.RestauranteNaoEncontradoException;
+import com.lduran.algafood.domain.model.Cidade;
 import com.lduran.algafood.domain.model.Cozinha;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.repository.RestauranteRepository;
@@ -24,6 +25,9 @@ public class CadastroRestauranteService
 
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
+
+	@Autowired
+	private CadastroCidadeService cadastroCidade;
 
 	public List<Restaurante> listar()
 	{
@@ -43,6 +47,11 @@ public class CadastroRestauranteService
 		Cozinha cozinha = cadastroCozinha.buscar(cozinhaId);
 
 		restaurante.setCozinha(cozinha);
+
+		long cidadeId = restaurante.getEndereco().getCidade().getId();
+		Cidade cidade = cadastroCidade.buscar(cidadeId);
+
+		restaurante.getEndereco().setCidade(cidade);
 
 		return restauranteRepository.save(restaurante);
 	}

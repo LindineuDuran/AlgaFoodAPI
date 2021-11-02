@@ -29,11 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lduran.algafood.api.assembler.RestauranteInputModelDisAssembler;
+import com.lduran.algafood.api.assembler.RestauranteInputModelDisassembler;
 import com.lduran.algafood.api.assembler.RestauranteModelAssembler;
 import com.lduran.algafood.api.model.RestauranteModel;
 import com.lduran.algafood.api.model.input.RestauranteInputModel;
 import com.lduran.algafood.core.validation.ValidacaoException;
+import com.lduran.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.lduran.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.lduran.algafood.domain.exception.NegocioException;
 import com.lduran.algafood.domain.model.Restaurante;
@@ -53,7 +54,7 @@ public class RestauranteController
 	private RestauranteModelAssembler assembler;
 
 	@Autowired
-	private RestauranteInputModelDisAssembler disassembler;
+	private RestauranteInputModelDisassembler disassembler;
 
 	@GetMapping
 	public ResponseEntity<List<RestauranteModel>> listar()
@@ -78,7 +79,7 @@ public class RestauranteController
 			Restaurante restaurante = disassembler.toDomainObject(restauranteInput);
 			return assembler.toModel(cadastroRestaurante.salvar(restaurante));
 		}
-		catch (CozinhaNaoEncontradaException e)
+		catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e)
 		{
 			throw new NegocioException(e.getMessage());
 		}
@@ -96,7 +97,7 @@ public class RestauranteController
 
 			return assembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 		}
-		catch (CozinhaNaoEncontradaException e)
+		catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e)
 		{
 			throw new NegocioException(e.getMessage());
 		}
