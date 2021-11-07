@@ -3,7 +3,9 @@ package com.lduran.algafood.domain.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -59,12 +61,18 @@ public class Restaurante
 
 	private Boolean ativo = Boolean.TRUE;
 
+	private Boolean aberto = Boolean.FALSE;
+
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-	private List<FormaPagamento> formasPagamento = new ArrayList<>();
+	private Set<FormaPagamento> formasPagamento = new HashSet<>();
 
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
+
+	@ManyToMany
+	@JoinTable(name = "restaurante_usuario_responsavel", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private Set<Usuario> responsaveis = new HashSet<>();
 
 	public void ativar()
 	{
@@ -74,5 +82,35 @@ public class Restaurante
 	public void inativar()
 	{
 		setAtivo(false);
+	}
+
+	public boolean adicionarFormaPagamento(FormaPagamento formaPagamento)
+	{
+		return getFormasPagamento().add(formaPagamento);
+	}
+
+	public boolean removerFormaPagamento(FormaPagamento formaPagamento)
+	{
+		return getFormasPagamento().remove(formaPagamento);
+	}
+
+	public boolean removerResponsavel(Usuario usuario)
+	{
+		return getResponsaveis().remove(usuario);
+	}
+
+	public boolean adicionarResponsavel(Usuario usuario)
+	{
+		return getResponsaveis().add(usuario);
+	}
+
+	public void abrir()
+	{
+		setAberto(true);
+	}
+
+	public void fechar()
+	{
+		setAberto(false);
 	}
 }
