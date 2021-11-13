@@ -37,6 +37,7 @@ import com.lduran.algafood.core.validation.ValidacaoException;
 import com.lduran.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.lduran.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.lduran.algafood.domain.exception.NegocioException;
+import com.lduran.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.service.CadastroRestauranteService;
 
@@ -130,11 +131,39 @@ public class RestauranteController
 		cadastroRestaurante.ativar(restauranteId);
 	}
 
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restauranteIds)
+	{
+		try
+		{
+			cadastroRestaurante.ativar(restauranteIds);
+		}
+		catch (RestauranteNaoEncontradoException e)
+		{
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+
 	@DeleteMapping("/{restauranteId}/inativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long restauranteId)
 	{
 		cadastroRestaurante.inativar(restauranteId);
+	}
+
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restauranteIds)
+	{
+		try
+		{
+			cadastroRestaurante.inativar(restauranteIds);
+		}
+		catch (RestauranteNaoEncontradoException e)
+		{
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 
 	@PutMapping("/{restauranteId}/abertura")
