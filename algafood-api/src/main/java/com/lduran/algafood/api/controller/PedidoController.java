@@ -51,10 +51,10 @@ public class PedidoController
 		return ResponseEntity.ok(pedidoResumoModelAssembler.toCollectionModel(pedidos));
 	}
 
-	@GetMapping("/{pedidoId}")
-	public PedidoModel buscar(@PathVariable Long pedidoId)
+	@GetMapping("/{codigoPedido}")
+	public PedidoModel buscar(@PathVariable String codigoPedido)
 	{
-		return pedidoModelAssembler.toModel(emissaoPedido.buscar(pedidoId));
+		return pedidoModelAssembler.toModel(emissaoPedido.buscar(codigoPedido));
 	}
 
 	@PostMapping

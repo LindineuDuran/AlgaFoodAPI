@@ -5,13 +5,8 @@ public class PedidoNaoEncontradoException extends EntidadeNaoEncontradaException
 
 	private static final long serialVersionUID = 1L;
 
-	public PedidoNaoEncontradoException(String mensagem)
+	public PedidoNaoEncontradoException(String codigPedidoo)
 	{
-		super(mensagem);
-	}
-
-	public PedidoNaoEncontradoException(Long pedidoId)
-	{
-		this(String.format("Não existe um pedido com código %d", pedidoId));
+		super(String.format("Não existe um pedido com código %s", codigPedidoo));
 	}
 }

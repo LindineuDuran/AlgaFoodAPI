@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
@@ -17,8 +18,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.lduran.algafood.domain.exception.NegocioException;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +36,8 @@ public class Pedido
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	private String codigo;
 
 	private BigDecimal subtotal;
 	private BigDecimal taxaFrete;
@@ -72,5 +78,43 @@ public class Pedido
 		this.subtotal = getItens().stream().map(item -> item.getPrecoTotal()).reduce(BigDecimal.ZERO, BigDecimal::add);
 
 		this.valorTotal = this.subtotal.add(this.taxaFrete);
+	}
+
+	public void confirmar()
+	{
+		this.setStatus(StatusPedido.CONFIRMADO);
+		this.setDataConfirmacao(OffsetDateTime.now());
+
+	}
+
+	public void cancelar()
+	{
+		this.setStatus(StatusPedido.CANCELADO);
+		this.setDataCancelamento(OffsetDateTime.now());
+
+	}
+
+	public void entregar()
+	{
+		this.setStatus(StatusPedido.ENTREGUE);
+		this.setDataEntrega(OffsetDateTime.now());
+
+	}
+
+	private void setStatus(StatusPedido novoStatus)
+	{
+		if (getStatus().naoPodeAlterarPara(novoStatus))
+		{
+			throw new NegocioException(String.format("Status do pedido %s não pode ser alterado de %s para %s",
+					this.getCodigo(), this.getStatus().getDescricao(), novoStatus.getDescricao()));
+		}
+
+		this.status = novoStatus;
+	}
+
+	@PrePersist
+	private void gerarCodigo()
+	{
+		setCodigo(UUID.randomUUID().toString());
 	}
 }
