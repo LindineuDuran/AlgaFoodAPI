@@ -3,13 +3,11 @@ package com.lduran.algafood.api.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.lduran.algafood.api.model.input.RestauranteResumoModel;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonFilter("pedidoFilter")
 @Setter
 @Getter
 public class PedidoResumoModel
