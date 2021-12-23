@@ -25,6 +25,7 @@ import com.lduran.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.lduran.algafood.domain.exception.NegocioException;
 import com.lduran.algafood.domain.model.Pedido;
 import com.lduran.algafood.domain.model.Usuario;
+import com.lduran.algafood.domain.repository.filter.PedidoFilter;
 import com.lduran.algafood.domain.service.EmissaoPedidoService;
 
 @RestController
@@ -43,10 +44,18 @@ public class PedidoController
 	@Autowired
 	private PedidoInputModelDisassembler pedidoInputModelDisassembler;
 
+//	@GetMapping
+//	public ResponseEntity<List<PedidoResumoModel>> listar()
+//	{
+//		List<Pedido> pedidos = emissaoPedido.listar();
+//
+//		return ResponseEntity.ok(pedidoResumoModelAssembler.toCollectionModel(pedidos));
+//	}
+
 	@GetMapping
-	public ResponseEntity<List<PedidoResumoModel>> listar()
+	public ResponseEntity<List<PedidoResumoModel>> pesquisar(PedidoFilter filtro)
 	{
-		List<Pedido> pedidos = emissaoPedido.listar();
+		List<Pedido> pedidos = emissaoPedido.pesquisar(filtro);
 
 		return ResponseEntity.ok(pedidoResumoModelAssembler.toCollectionModel(pedidos));
 	}

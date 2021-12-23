@@ -15,6 +15,8 @@ import com.lduran.algafood.domain.model.Produto;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.model.Usuario;
 import com.lduran.algafood.domain.repository.PedidoRepository;
+import com.lduran.algafood.domain.repository.filter.PedidoFilter;
+import com.lduran.algafood.infrastructure.repository.spec.PedidoSpecs;
 
 @Service
 public class EmissaoPedidoService
@@ -40,6 +42,11 @@ public class EmissaoPedidoService
 	public List<Pedido> listar()
 	{
 		return pedidoRepository.findAll();
+	}
+
+	public List<Pedido> pesquisar(PedidoFilter filtro)
+	{
+		return pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro));
 	}
 
 	public Pedido buscar(String codigoPedido)
