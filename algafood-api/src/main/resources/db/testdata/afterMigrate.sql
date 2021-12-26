@@ -150,3 +150,35 @@ values (5, '8d774bcf-b238-42f3-aef1-5fb388754d63', 1, 3, 2, 1, '38400-200', 'Rua
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (6, 5, 3, 1, 87.2, 87.2, null);
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, 
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values (6, '74725054-65da-4cbb-8135-707bfe3008b6', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+        'CRIADO', '2019-11-02 20:34:04', 298.90, 10, 308.90);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (7, 6, 1, 1, 78.9, 78.9, null);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (8, 6, 2, 2, 110, 220, 'Menos picante, por favor');
+
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, 
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, subtotal, taxa_frete, valor_total)
+values (7, 'a0a129bf-6ff7-4b17-9906-80f06ecad9b7', 4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+        'CRIADO', '2019-11-02 21:00:30', 79, 0, 79);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (9, 7, 6, 1, 79, 79, 'Ao ponto');
+
+
+insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, 
+                    endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
+	                status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
+values (8, '04515c88-d0b9-43dc-aff0-bd6735624781', 1, 1, 1, 1, '38400-222', 'Rua Natal', '200', null, 'Brasil',
+        'ENTREGUE', '2019-10-30 21:10:00', '2019-10-30 21:10:45', '2019-10-30 21:55:44', 110, 10, 120);
+
+insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+values (11, 8, 2, 1, 110, 110, null);

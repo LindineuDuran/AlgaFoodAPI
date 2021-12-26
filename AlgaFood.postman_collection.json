@@ -9,7 +9,7 @@
 			"name": "Cozinhas",
 			"item": [
 				{
-					"name": "Listar",
+					"name": "Listar Todas",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -26,7 +26,39 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/cozinhas/",
+							"raw": "http://localhost:8080/cozinhas/todas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cozinhas",
+								"todas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar com Paginação e Ordenação",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/cozinhas/?size=2&page=0&sort =nome",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -35,6 +67,20 @@
 							"path": [
 								"cozinhas",
 								""
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "sort ",
+									"value": "nome"
+								}
 							]
 						}
 					},
@@ -1936,7 +1982,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/restaurantes/4/produtos/",
+							"raw": "http://localhost:8080/restaurantes/1/produtos/?incluirInativos=true",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1944,9 +1990,15 @@
 							"port": "8080",
 							"path": [
 								"restaurantes",
-								"4",
+								"1",
 								"produtos",
 								""
+							],
+							"query": [
+								{
+									"key": "incluirInativos",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -2046,7 +2098,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/pedidos",
+							"raw": "http://localhost:8080/pedidos?clienteId=1&restauranteId=1&dataCriacaoInicio=2019-10-30T10:00:00-03:00&dataCriacaoFim=2021-12-26T13:18:18Z&size=2&page=0&sort=nomeCliente&sort=codigo,desc",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -2054,6 +2106,40 @@
 							"port": "8080",
 							"path": [
 								"pedidos"
+							],
+							"query": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								},
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2019-10-30T10:00:00-03:00"
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2021-12-26T13:18:18Z"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "sort",
+									"value": "nomeCliente"
+								},
+								{
+									"key": "sort",
+									"value": "codigo,desc"
+								}
 							]
 						}
 					},

@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -48,11 +49,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler
 		String detail = MSG_ERRO_GENERICA_USUARIO_FINAL;
 
 		// Importante colocar o printStackTrace (pelo menos por enquanto, que não
-		// estamos
-		// fazendo logging) para mostrar a stacktrace no console
+		// estamos fazendo logging) para mostrar a stacktrace no console
 		// Se não fizer isso, você não vai ver a stacktrace de exceptions que seriam
-		// importantes
-		// para você durante, especialmente na fase de desenvolvimento
+		// importantes para você durante, especialmente na fase de desenvolvimento
 		ex.printStackTrace();
 
 		Problem problem = createProblemBuilder(status, problemType, detail).userMessage(detail).build();
@@ -215,6 +214,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler
 		}
 
 		return super.handleTypeMismatch(ex, headers, status, request);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
+			WebRequest request)
+	{
+		return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
 	}
 
 	@Override

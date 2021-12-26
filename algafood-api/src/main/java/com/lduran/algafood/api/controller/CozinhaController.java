@@ -5,6 +5,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,10 +40,22 @@ public class CozinhaController
 	@Autowired
 	private CozinhaInputModelDisassembler disassembler;
 
-	@GetMapping
+	@GetMapping("/todas")
 	public ResponseEntity<List<CozinhaModel>> listar()
 	{
 		return ResponseEntity.ok(assembler.toCollectionModel(cadastroCozinha.listar()));
+	}
+
+	@GetMapping
+	public Page<CozinhaModel> listarPage(Pageable pageable)
+	{
+		Page<Cozinha> cozinhasPage = cadastroCozinha.listarPage(pageable);
+
+		List<CozinhaModel> cozinhasModel = assembler.toCollectionModel(cozinhasPage.getContent());
+
+		Page<CozinhaModel> cozinhasModelPage = new PageImpl<>(cozinhasModel, pageable, cozinhasPage.getTotalElements());
+
+		return cozinhasModelPage;
 	}
 
 	@GetMapping("/{cozinhaId}")
