@@ -1,4 +1,4 @@
-package com.lduran.algafood.domain.repository.filter;
+package com.lduran.algafood.domain.filter;
 
 import java.time.OffsetDateTime;
 

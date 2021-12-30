@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lduran.algafood.domain.exception.NegocioException;
 import com.lduran.algafood.domain.exception.PedidoNaoEncontradoException;
+import com.lduran.algafood.domain.filter.PedidoFilter;
 import com.lduran.algafood.domain.model.Cidade;
 import com.lduran.algafood.domain.model.FormaPagamento;
 import com.lduran.algafood.domain.model.Pedido;
@@ -17,7 +18,6 @@ import com.lduran.algafood.domain.model.Produto;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.model.Usuario;
 import com.lduran.algafood.domain.repository.PedidoRepository;
-import com.lduran.algafood.domain.repository.filter.PedidoFilter;
 import com.lduran.algafood.infrastructure.repository.spec.PedidoSpecs;
 
 @Service
