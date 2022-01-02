@@ -17,6 +17,9 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<modelmapper.version>2.4.2</modelmapper.version>
+		<squiggly.version>1.3.18</squiggly.version>
+		<jasperreports.version>6.18.1</jasperreports.version>
 	</properties>
 
 	<dependencies>
@@ -85,13 +88,25 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>2.4.2</version>
+			<version>${modelmapper.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.github.bohnman</groupId>
 			<artifactId>squiggly-filter-jackson</artifactId>
-			<version>1.3.18</version>
+			<version>${squiggly.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${jasperreports.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-functions</artifactId>
+			<version>${jasperreports.version}</version>
 		</dependency>
 	</dependencies>
 

@@ -1,4 +1,4 @@
-package com.lduran.algafood.infrastructure.service;
+package com.lduran.algafood.infrastructure.service.query;
 
 import java.util.ArrayList;
 import java.util.Date;
