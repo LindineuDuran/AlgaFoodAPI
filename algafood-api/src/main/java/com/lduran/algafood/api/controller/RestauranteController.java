@@ -35,11 +35,11 @@ import com.lduran.algafood.api.assembler.RestauranteModelAssembler;
 import com.lduran.algafood.api.model.RestauranteModel;
 import com.lduran.algafood.api.model.input.RestauranteInputModel;
 import com.lduran.algafood.api.model.view.RestauranteView;
-import com.lduran.algafood.core.validation.ValidacaoException;
 import com.lduran.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.lduran.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.lduran.algafood.domain.exception.NegocioException;
 import com.lduran.algafood.domain.exception.RestauranteNaoEncontradoException;
+import com.lduran.algafood.domain.exception.ValidacaoException;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.service.CadastroRestauranteService;
 

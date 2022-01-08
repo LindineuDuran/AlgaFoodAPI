@@ -1,4 +1,4 @@
-package com.lduran.algafood.core.validation;
+package com.lduran.algafood.domain.exception;
 
 import org.springframework.validation.BindingResult;
 
