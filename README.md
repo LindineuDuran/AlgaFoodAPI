@@ -10,7 +10,7 @@
  - [3.13. Livro azul famoso de DDD](https://www.amazon.com.br/Domain-Driven-Design-Eric-Evans/dp/8550800651)
  - [3.13. Artigo sobre Aggregate do Martin Fowler](https://martinfowler.com/bliki/DDD_Aggregate.html)
  - [4.6. GnuTLS](https://gnutls.org/)
- - [4.6. Documentação da REST API do GitHub](https://app.algaworks.com/aulas/1840/usando-o-protocolo-http)
+ - [4.6. Documentação da REST API do GitHub](https://docs.github.com/en/rest)
  - [4.7. Postman](https://www.postman.com/)
  - [4.7. Insomnia](https://insomnia.rest/)
  - [4.18. Registro oficial IANA de códigos de status HTTP](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
