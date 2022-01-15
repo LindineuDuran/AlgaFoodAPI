@@ -1,5 +1,6 @@
 package com.lduran.algafood.infrastructure.service.storage;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -26,6 +27,21 @@ public class LocalFotoStorageService implements FotoStorageService
 		catch (Exception e)
 		{
 			throw new StorageException("Não foi possível armazenar arquivo.", e);
+		}
+	}
+
+	@Override
+	public InputStream recuperar(String nomeArquivo)
+	{
+		Path arquivoPath = getArquivoPath(nomeArquivo);
+
+		try
+		{
+			return Files.newInputStream(arquivoPath);
+		}
+		catch (Exception e)
+		{
+			throw new StorageException("Não foi possível recuperar arquivo.", e);
 		}
 	}
 
