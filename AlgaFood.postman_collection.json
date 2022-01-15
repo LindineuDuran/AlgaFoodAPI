@@ -6,6 +6,61 @@
 	},
 	"item": [
 		{
+			"name": "Estatísticas",
+			"item": [
+				{
+					"name": "Vendas Diárias",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/pdf, application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/estatisticas/vendas-diarias?restauranteId=1&dataCriacaoInicio=2019-10-30T21:10:00Z&dataCriacaoFim=2019-11-01T11:13:25Z&timeOffset=-03:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estatisticas",
+								"vendas-diarias"
+							],
+							"query": [
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2019-10-30T21:10:00Z"
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2019-11-01T11:13:25Z"
+								},
+								{
+									"key": "timeOffset",
+									"value": "-03:00"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Cozinhas",
 			"item": [
 				{
@@ -302,6 +357,225 @@
 							"path": [
 								"cozinhas",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos?clienteId=1&restauranteId=1&dataCriacaoInicio=2019-10-30T10:00:00-03:00&dataCriacaoFim=2021-12-26T13:18:18Z&size=2&page=0&sort=nomeCliente&sort=codigo,desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "clienteId",
+									"value": "1"
+								},
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2019-10-30T10:00:00-03:00"
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2021-12-26T13:18:18Z"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "sort",
+									"value": "nomeCliente"
+								},
+								{
+									"key": "sort",
+									"value": "codigo,desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Campos Filtrados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos?campos=codigo,valorTotal",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "campos",
+									"value": "codigo,valorTotal"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Campos Filtrados com Squiggly",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos?fields=codigo,valorTotal,sub*,cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "codigo,valorTotal,sub*,cliente"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"7843c010-0d06-4893-ac05-3f43ffbb6a66"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"restaurante\": {\r\n        \"id\": 1\r\n    },\r\n    \"formaPagamento\": {\r\n        \"id\": 1\r\n    },\r\n    \"enderecoEntrega\": {\r\n        \"cep\": \"38400-000\",\r\n        \"logradouro\": \"Rua Floriano Peixoto\",\r\n        \"numero\": \"600\",\r\n        \"complemento\": \"Apto 704\",\r\n        \"bairro\": \"Brasil\",\r\n        \"cidade\": {\r\n            \"id\": 1\r\n        }\r\n    },\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": 1,\r\n            \"quantidade\": 3,\r\n            \"observacao\": \"sem pimenta\"\r\n        },\r\n        {\r\n            \"produtoId\": 2,\r\n            \"quantidade\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmação",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/confirmacao",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
+								"confirmacao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/cancelamento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
+								"cancelamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entregar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/entrega",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pedidos",
+								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
+								"entrega"
 							]
 						}
 					},
@@ -1284,7 +1558,7 @@
 			]
 		},
 		{
-			"name": "FormaPagamento",
+			"name": "Produtos",
 			"item": [
 				{
 					"name": "Listar",
@@ -1292,34 +1566,23 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/formas-pagamento",
+							"raw": "http://localhost:8080/restaurantes/1/produtos/?incluirInativos=true",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"formas-pagamento"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/formas-pagamento/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
+								"restaurantes",
+								"1",
+								"produtos",
+								""
 							],
-							"port": "8080",
-							"path": [
-								"formas-pagamento",
-								"1"
+							"query": [
+								{
+									"key": "incluirInativos",
+									"value": "true"
+								}
 							]
 						}
 					},
@@ -1332,7 +1595,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descricao\": \"Bitcoin\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"Kibe Cru\",\r\n    \"descricao\": \"Carne moída, trigo de kibe e especiarias\",\r\n    \"preco\": 10.00,\r\n    \"ativo\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1340,28 +1603,51 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/formas-pagamento/",
+							"raw": "http://localhost:8080/restaurantes/4/produtos",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"formas-pagamento",
-								""
+								"restaurantes",
+								"4",
+								"produtos"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Alterar",
+					"name": "Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/4/produtos/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"4",
+								"produtos",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"descricao\": \"Cheque\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"Kibe Cru\",\r\n    \"descricao\": \"Carne moída, trigo de kibe e especiarias\",\r\n    \"preco\": 8.00,\r\n    \"ativo\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1369,15 +1655,124 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/formas-pagamento/1",
+							"raw": "http://localhost:8080/restaurantes/4/produtos/10",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"formas-pagamento",
-								"1"
+								"restaurantes",
+								"4",
+								"produtos",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fotos de Produtos",
+			"item": [
+				{
+					"name": "Buscar Dados da Foto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Arquivo da Foto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "image/jpeg, image/png",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=0",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/GitHub/AlgaFoodAPI/PrimeRib.jpg"
+								},
+								{
+									"key": "descricao",
+									"value": "Prime Rib ao ponto",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
 							]
 						}
 					},
@@ -1388,25 +1783,144 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/formas-pagamento/1",
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"formas-pagamento",
-								"1"
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Dados da Foto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Arquivo da Foto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "image/jpeg, image/png",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=0",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/GitHub/AlgaFoodAPI/PrimeRib.jpg"
+								},
+								{
+									"key": "descricao",
+									"value": "Prime Rib ao ponto",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
 							]
 						}
 					},
@@ -1974,7 +2488,7 @@
 			]
 		},
 		{
-			"name": "Produtos",
+			"name": "FormaPagamento",
 			"item": [
 				{
 					"name": "Listar",
@@ -1982,36 +2496,76 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/restaurantes/1/produtos/?incluirInativos=true",
+							"raw": "http://localhost:8080/formas-pagamento",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"restaurantes",
-								"1",
-								"produtos",
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/formas-pagamento/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\": \"Bitcoin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/formas-pagamento/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento",
 								""
-							],
-							"query": [
-								{
-									"key": "incluirInativos",
-									"value": "true"
-								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Adicionar",
+					"name": "Alterar",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Kibe Cru\",\r\n    \"descricao\": \"Carne moída, trigo de kibe e especiarias\",\r\n    \"preco\": 10.00,\r\n    \"ativo\": true\r\n}",
+							"raw": "{\r\n    \"descricao\": \"Cheque\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2019,51 +2573,28 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/restaurantes/4/produtos",
+							"raw": "http://localhost:8080/formas-pagamento/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"restaurantes",
-								"4",
-								"produtos"
+								"formas-pagamento",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Buscar",
+					"name": "Excluir",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/restaurantes/4/produtos/10",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurantes",
-								"4",
-								"produtos",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Atualizar",
-					"request": {
-						"method": "PUT",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Kibe Cru\",\r\n    \"descricao\": \"Carne moída, trigo de kibe e especiarias\",\r\n    \"preco\": 8.00,\r\n    \"ativo\": true\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2071,291 +2602,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/restaurantes/4/produtos/10",
+							"raw": "http://localhost:8080/formas-pagamento/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"restaurantes",
-								"4",
-								"produtos",
-								"10"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Pedidos",
-			"item": [
-				{
-					"name": "Listar",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos?clienteId=1&restauranteId=1&dataCriacaoInicio=2019-10-30T10:00:00-03:00&dataCriacaoFim=2021-12-26T13:18:18Z&size=2&page=0&sort=nomeCliente&sort=codigo,desc",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos"
-							],
-							"query": [
-								{
-									"key": "clienteId",
-									"value": "1"
-								},
-								{
-									"key": "restauranteId",
-									"value": "1"
-								},
-								{
-									"key": "dataCriacaoInicio",
-									"value": "2019-10-30T10:00:00-03:00"
-								},
-								{
-									"key": "dataCriacaoFim",
-									"value": "2021-12-26T13:18:18Z"
-								},
-								{
-									"key": "size",
-									"value": "2"
-								},
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "sort",
-									"value": "nomeCliente"
-								},
-								{
-									"key": "sort",
-									"value": "codigo,desc"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Listar Campos Filtrados",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos?campos=codigo,valorTotal",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos"
-							],
-							"query": [
-								{
-									"key": "campos",
-									"value": "codigo,valorTotal"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Listar Campos Filtrados com Squiggly",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos?fields=codigo,valorTotal,sub*,cliente",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos"
-							],
-							"query": [
-								{
-									"key": "fields",
-									"value": "codigo,valorTotal,sub*,cliente"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos",
-								"7843c010-0d06-4893-ac05-3f43ffbb6a66"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"restaurante\": {\r\n        \"id\": 1\r\n    },\r\n    \"formaPagamento\": {\r\n        \"id\": 1\r\n    },\r\n    \"enderecoEntrega\": {\r\n        \"cep\": \"38400-000\",\r\n        \"logradouro\": \"Rua Floriano Peixoto\",\r\n        \"numero\": \"600\",\r\n        \"complemento\": \"Apto 704\",\r\n        \"bairro\": \"Brasil\",\r\n        \"cidade\": {\r\n            \"id\": 1\r\n        }\r\n    },\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": 1,\r\n            \"quantidade\": 3,\r\n            \"observacao\": \"sem pimenta\"\r\n        },\r\n        {\r\n            \"produtoId\": 2,\r\n            \"quantidade\": 1\r\n        }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/pedidos",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Confirmação",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/confirmacao",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos",
-								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
-								"confirmacao"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Cancelar",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/cancelamento",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos",
-								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
-								"cancelamento"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Entregar",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/entrega",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"pedidos",
-								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
-								"entrega"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Estatísticas",
-			"item": [
-				{
-					"name": "Vendas Diárias",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "default",
-								"disabled": true
-							},
-							{
-								"key": "Accept",
-								"value": "application/pdf, application/json",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/estatisticas/vendas-diarias?restauranteId=1&dataCriacaoInicio=2019-10-30T21:10:00Z&dataCriacaoFim=2019-11-01T11:13:25Z&timeOffset=-03:00",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"estatisticas",
-								"vendas-diarias"
-							],
-							"query": [
-								{
-									"key": "restauranteId",
-									"value": "1"
-								},
-								{
-									"key": "dataCriacaoInicio",
-									"value": "2019-10-30T21:10:00Z"
-								},
-								{
-									"key": "dataCriacaoFim",
-									"value": "2019-11-01T11:13:25Z"
-								},
-								{
-									"key": "timeOffset",
-									"value": "-03:00"
-								}
+								"formas-pagamento",
+								"1"
 							]
 						}
 					},
