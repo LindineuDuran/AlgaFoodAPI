@@ -10,7 +10,7 @@ public interface FotoStorageService
 {
 	void armazenar(NovaFoto novaFoto);
 
-	InputStream recuperar(String nomeArquivo);
+	FotoRecuperada recuperar(String nomeArquivo);
 
 	void remover(String nomeArquivo);
 
@@ -34,6 +34,25 @@ public interface FotoStorageService
 	class NovaFoto
 	{
 		private String nomeArquivo;
+		private String contentType;
 		private InputStream inputStream;
+	}
+
+	@Builder
+	@Getter
+	class FotoRecuperada
+	{
+		private InputStream inputStream;
+		private String url;
+
+		public boolean temURL()
+		{
+			return url != null;
+		}
+
+		public boolean temInputStream()
+		{
+			return inputStream != null;
+		}
 	}
 }

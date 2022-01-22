@@ -1,7 +1,6 @@
 package com.lduran.algafood.api.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.net.HttpHeaders;
 import com.lduran.algafood.api.assembler.FotoProdutoModelAssembler;
 import com.lduran.algafood.api.model.FotoProdutoModel;
 import com.lduran.algafood.api.model.input.FotoProdutoInput;
@@ -31,6 +31,7 @@ import com.lduran.algafood.domain.model.Produto;
 import com.lduran.algafood.domain.service.CadastroProdutoService;
 import com.lduran.algafood.domain.service.CatalogoFotoProdutoService;
 import com.lduran.algafood.domain.service.FotoStorageService;
+import com.lduran.algafood.domain.service.FotoStorageService.FotoRecuperada;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
@@ -57,9 +58,8 @@ public class RestauranteProdutoFotoController
 	}
 
 	@GetMapping
-	public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId,
-			@PathVariable Long produtoId, @RequestHeader(name = "accept") String acceptHeader)
-			throws HttpMediaTypeNotAcceptableException
+	public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
+			@RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException
 	{
 		try
 		{
@@ -70,9 +70,18 @@ public class RestauranteProdutoFotoController
 
 			verificarCompatibilidadeMediaType(mediaTypeFoto, mediaTypesAceitas);
 
-			InputStream inputStream = fotoStorage.recuperar(fotoProduto.getNomeArquivo());
+			FotoRecuperada fotoRecuperada = fotoStorage.recuperar(fotoProduto.getNomeArquivo());
 
-			return ResponseEntity.ok().contentType(mediaTypeFoto).body(new InputStreamResource(inputStream));
+			if (fotoRecuperada.temURL())
+			{
+				return ResponseEntity.status(HttpStatus.FOUND).header(HttpHeaders.LOCATION, fotoRecuperada.getUrl())
+						.build();
+			}
+			else
+			{
+				return ResponseEntity.ok().contentType(mediaTypeFoto)
+						.body(new InputStreamResource(fotoRecuperada.getInputStream()));
+			}
 		}
 		catch (EntidadeNaoEncontradaException e)
 		{
