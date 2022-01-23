@@ -5,26 +5,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lduran.algafood.domain.model.Pedido;
+import com.lduran.algafood.domain.service.EnvioEmailService.Mensagem;
 
 @Service
 public class FluxoPedidoService
 {
 	@Autowired
-	private EmissaoPedidoService emissaoPedidoService;
+	private EmissaoPedidoService emissaoPedido;
+
+	@Autowired
+	private EnvioEmailService envioEmail;
 
 	@Transactional
 	public void confirmar(String codigoPedido)
 	{
-		Pedido pedido = emissaoPedidoService.buscar(codigoPedido);
+		Pedido pedido = emissaoPedido.buscar(codigoPedido);
 
 		pedido.confirmar();
 
+		var mensagem = Mensagem.builder().assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
+				.corpo("O pedido <strong>" + pedido.getCodigo() + "</strong> foi confirmado!")
+				.destinatario(pedido.getCliente().getEmail()).build();
+
+		envioEmail.enviar(mensagem);
 	}
 
 	@Transactional
 	public void cancelar(String codigoPedido)
 	{
-		Pedido pedido = emissaoPedidoService.buscar(codigoPedido);
+		Pedido pedido = emissaoPedido.buscar(codigoPedido);
 
 		pedido.cancelar();
 	}
@@ -32,7 +41,7 @@ public class FluxoPedidoService
 	@Transactional
 	public void entregar(String codigoPedido)
 	{
-		Pedido pedido = emissaoPedidoService.buscar(codigoPedido);
+		Pedido pedido = emissaoPedido.buscar(codigoPedido);
 
 		pedido.entregar();
 

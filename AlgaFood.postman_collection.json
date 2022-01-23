@@ -524,7 +524,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/pedidos/7843c010-0d06-4893-ac05-3f43ffbb6a66/confirmacao",
+							"raw": "http://localhost:8080/pedidos/d178b637-a785-4768-a3cb-aa1ce5a8cdab/confirmacao",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -532,7 +532,7 @@
 							"port": "8080",
 							"path": [
 								"pedidos",
-								"7843c010-0d06-4893-ac05-3f43ffbb6a66",
+								"d178b637-a785-4768-a3cb-aa1ce5a8cdab",
 								"confirmacao"
 							]
 						}
@@ -1676,131 +1676,6 @@
 		{
 			"name": "Fotos de Produtos",
 			"item": [
-				{
-					"name": "Buscar Dados da Foto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurantes",
-								"1",
-								"produtos",
-								"1",
-								"foto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar Arquivo da Foto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "image/jpeg, image/png",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurantes",
-								"1",
-								"produtos",
-								"1",
-								"foto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Atualizar",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "multipart/form-data; boundary=0",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "arquivo",
-									"type": "file",
-									"src": "/D:/GitHub/AlgaFoodAPI/PrimeRib.jpg"
-								},
-								{
-									"key": "descricao",
-									"value": "Prime Rib ao ponto",
-									"type": "default"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurantes",
-								"1",
-								"produtos",
-								"1",
-								"foto"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Excluir",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/restaurantes/1/produtos/1/foto",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"restaurantes",
-								"1",
-								"produtos",
-								"1",
-								"foto"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "Buscar Dados da Foto",
 					"request": {
