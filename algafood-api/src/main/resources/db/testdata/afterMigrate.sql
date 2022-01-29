@@ -90,13 +90,13 @@ insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secret
 insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(1, 'João da Silva', 'lduran.tab@gmail.com', '123', utc_timestamp),
-(2, 'Maria Joaquina', 'lduran.tab+maria.joaquina@gmail.com', '123', utc_timestamp),
-(3, 'José Souza', 'lduran.tab+josé.souza@gmail.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'lduran.tab+sebastião.martins@gmail.com', '123', utc_timestamp),
-(5, 'Manoel Lima', 'lduran.tab+manoel.lima@gmail.com', '123', utc_timestamp),
-(6, 'Débora Mendonça', 'lduran.tab+débora.mendonça@gmail.com', '123', utc_timestamp),
-(7, 'Carlos Lima', 'lduran.tab+carlos.lima@gmail.com', '123', utc_timestamp);
+(1, 'João da Silva', 'lduran.tab+joaodasilva@gmail.com', '123', utc_timestamp),
+(2, 'Maria Joaquina', 'lduran.tab+mariajoaquina@gmail.com', '123', utc_timestamp),
+(3, 'José Souza', 'lduran.tab+josesouza@gmail.com', '123', utc_timestamp),
+(4, 'Sebastião Martins', 'lduran.tab+sebastiaomartins@gmail.com', '123', utc_timestamp),
+(5, 'Manoel Lima', 'lduran.tab+manoellima@gmail.com', '123', utc_timestamp),
+(6, 'Débora Mendonça', 'lduran.tab+deboramendonça@gmail.com', '123', utc_timestamp),
+(7, 'Carlos Lima', 'lduran.tab+carloslima@gmail.com', '123', utc_timestamp);
 
 insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
 

@@ -28,3 +28,5 @@
  - [13.17. Conhecendo o JasperSoft Studio](https://community.jaspersoft.com/)
  - [14.5. Mapeamento OneToOne bidirecional com Lazy Loading](https://blog.algaworks.com/lazy-loading-com-mapeamento-onetoone/)
  - [14.26. Annotation Type ConditionalOnProperty](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html)
+- [15.5. What is Apache FreeMarker?](https://freemarker.apache.org)
+- [15.6. Boas práticas de HTML para e-mails](https://ajuda.locaweb.com.br/wiki/boas-praticas-de-html-para-email-marketing-ajuda-locaweb/)
