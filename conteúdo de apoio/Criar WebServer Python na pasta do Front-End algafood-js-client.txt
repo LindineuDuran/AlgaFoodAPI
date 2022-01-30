@@ -1,0 +1,3 @@
+Entrar na pasta algafood-js-client via prompt
+
+Executar o comando: python -m http.server 8000

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.flywaydb.core.internal.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -63,7 +64,9 @@ public class RestauranteController
 	@GetMapping
 	public ResponseEntity<List<RestauranteModel>> listarResumido()
 	{
-		return ResponseEntity.ok(assembler.toCollectionModel(cadastroRestaurante.listar()));
+		List<RestauranteModel> restaurantesModel = assembler.toCollectionModel(cadastroRestaurante.listar());
+		return ResponseEntity.ok().header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://www.algafood.local:8000")
+				.body(restaurantesModel);
 	}
 
 	@JsonView(RestauranteView.ApenasNome.class)
