@@ -30,7 +30,8 @@ function consultar()
           document.getElementById('campo-descricao').value='';
         },
 
-        error: function(error){
+        error: function(error)
+        {
             if (error.status == 400)
             {
                 var problem = JSON.parse(error.responseText);
