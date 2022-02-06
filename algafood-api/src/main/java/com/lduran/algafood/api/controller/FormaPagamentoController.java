@@ -1,10 +1,12 @@
 package com.lduran.algafood.api.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,13 +44,21 @@ public class FormaPagamentoController
 	@GetMapping
 	public ResponseEntity<List<FormaPagamentoModel>> listar()
 	{
-		return ResponseEntity.ok(assembler.toCollectionModel(cadastroFormaPagamento.listar()));
+		List<FormaPagamento> todasFormasPagamentos = cadastroFormaPagamento.listar();
+
+		List<FormaPagamentoModel> formasPagamentoModel = assembler.toCollectionModel(todasFormasPagamentos);
+
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)).body(formasPagamentoModel);
 	}
 
 	@GetMapping("/{formaPagamentoId}")
-	public FormaPagamentoModel buscar(@PathVariable long formaPagamentoId)
+	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable long formaPagamentoId)
 	{
-		return assembler.toModel(cadastroFormaPagamento.buscar(formaPagamentoId));
+		FormaPagamento formaPagamento = cadastroFormaPagamento.buscar(formaPagamentoId);
+
+		FormaPagamentoModel formaPagamentoModel = assembler.toModel(formaPagamento);
+
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)).body(formaPagamentoModel);
 	}
 
 	@PostMapping
