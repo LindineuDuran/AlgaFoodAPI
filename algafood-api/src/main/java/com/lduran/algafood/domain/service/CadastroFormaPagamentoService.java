@@ -1,5 +1,6 @@
 package com.lduran.algafood.domain.service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,16 @@ public class CadastroFormaPagamentoService
 	{
 		return this.formaPagamentoRepository.findById(formaPagamentoId)
 				.orElseThrow(() -> new FormaPagamentoNaoEncontradoException(formaPagamentoId));
+	}
+
+	public OffsetDateTime obtemUltimaDataAtualizacao()
+	{
+		return formaPagamentoRepository.getDataUltimaAtualizacao();
+	}
+
+	public OffsetDateTime obtemDataAtualizacaoPeloId(long formaPagamentoId)
+	{
+		return formaPagamentoRepository.getDataUltimaAtualizacaoById(formaPagamentoId);
 	}
 
 	@Transactional

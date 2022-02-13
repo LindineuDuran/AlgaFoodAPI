@@ -1,5 +1,6 @@
 package com.lduran.algafood.api.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +28,8 @@ import com.lduran.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.lduran.algafood.domain.exception.NegocioException;
 import com.lduran.algafood.domain.model.FormaPagamento;
 import com.lduran.algafood.domain.service.CadastroFormaPagamentoService;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 @RestController
 @RequestMapping("/formas-pagamento")
@@ -42,23 +45,64 @@ public class FormaPagamentoController
 	private FormaPagamentoInputModelDisassembler disassembler;
 
 	@GetMapping
-	public ResponseEntity<List<FormaPagamentoModel>> listar()
+	public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request)
 	{
+		ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+
+		String eTag = "0";
+
+		OffsetDateTime dataUltimaAtualizacao = cadastroFormaPagamento.obtemUltimaDataAtualizacao();
+
+		if(dataUltimaAtualizacao != null)
+		{
+			eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
+		}
+
+		if(request.checkNotModified(eTag))
+		{
+			return null;
+		}
+
 		List<FormaPagamento> todasFormasPagamentos = cadastroFormaPagamento.listar();
 
 		List<FormaPagamentoModel> formasPagamentoModel = assembler.toCollectionModel(todasFormasPagamentos);
 
-		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)).body(formasPagamentoModel);
+		return ResponseEntity.ok()
+//				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+//				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePrivate())
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
+//				.cacheControl(CacheControl.noCache())
+//				.cacheControl(CacheControl.noStore())
+				.eTag(eTag)
+				.body(formasPagamentoModel);
 	}
 
 	@GetMapping("/{formaPagamentoId}")
-	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable long formaPagamentoId)
+	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable long formaPagamentoId, ServletWebRequest request)
 	{
+		ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+
+		String eTag = "0";
+
+		OffsetDateTime dataAtualizacao = cadastroFormaPagamento.obtemDataAtualizacaoPeloId(formaPagamentoId);
+
+		if(dataAtualizacao != null)
+		{
+			eTag = String.valueOf(dataAtualizacao.toEpochSecond());
+		}
+
+		if(request.checkNotModified(eTag))
+		{
+			return null;
+		}
+
 		FormaPagamento formaPagamento = cadastroFormaPagamento.buscar(formaPagamentoId);
 
 		FormaPagamentoModel formaPagamentoModel = assembler.toModel(formaPagamento);
 
-		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)).body(formaPagamentoModel);
+		return ResponseEntity.ok()
+				.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
+				.body(formaPagamentoModel);
 	}
 
 	@PostMapping
