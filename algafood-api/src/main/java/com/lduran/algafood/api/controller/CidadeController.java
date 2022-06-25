@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,32 +29,31 @@ import com.lduran.algafood.domain.exception.NegocioException;
 import com.lduran.algafood.domain.model.Cidade;
 import com.lduran.algafood.domain.service.CadastroCidadeService;
 
+@Api(tags = "Cidades")
 @RestController
 @RequestMapping("/cidades")
 public class CidadeController
 {
 	@Autowired
 	private CadastroCidadeService cadastroCidade;
-
 	@Autowired
 	private CidadeModelAssembler assembler;
-
 	@Autowired
 	private CidadeInputModelDisassembler disassembler;
-
 	@GetMapping
+	@ApiOperation("Listar as cidades")
 	public ResponseEntity<List<CidadeModel>> listar()
 	{
 		return ResponseEntity.ok(assembler.toCollectionModel(cadastroCidade.listar()));
 	}
-
 	@GetMapping("/{cidadeId}")
-	public CidadeModel buscar(@PathVariable long cidadeId)
+	@ApiOperation("Buscar uma cidade por ID")
+	public CidadeModel buscar(@ApiParam("ID de uma cidade") @PathVariable long cidadeId)
 	{
 		return assembler.toModel(cadastroCidade.buscar(cidadeId));
 	}
-
 	@PostMapping
+	@ApiOperation("Adicionar uma nova cidade")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CidadeModel adicionar(@RequestBody @Valid CidadeInputModel cidadeInput)
 	{
@@ -65,9 +67,10 @@ public class CidadeController
 			throw new NegocioException(e.getMessage(), e);
 		}
 	}
-
 	@PutMapping("/{cidadeId}")
-	public CidadeModel atualizar(@PathVariable long cidadeId, @RequestBody @Valid CidadeInputModel cidadeInput)
+	@ApiOperation("Atualizar uma cidade por ID")
+	public CidadeModel atualizar(@ApiParam("ID de uma cidade") @PathVariable long cidadeId,
+			                     @RequestBody @Valid CidadeInputModel cidadeInput)
 	{
 		try
 		{
@@ -82,9 +85,9 @@ public class CidadeController
 			throw new NegocioException(e.getMessage(), e);
 		}
 	}
-
 	@DeleteMapping("/{cidadeId}")
-	public void remover(@PathVariable long cidadeId)
+	@ApiOperation("Remover uma cidade por ID")
+	public void remover(@ApiParam("ID de uma cidade") @PathVariable long cidadeId)
 	{
 		cadastroCidade.remover(cidadeId);
 	}
