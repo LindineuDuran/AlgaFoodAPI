@@ -31,3 +31,5 @@
 - [15.5. What is Apache FreeMarker?](https://freemarker.apache.org)
 - [15.6. Boas práticas de HTML para e-mails](https://ajuda.locaweb.com.br/wiki/boas-praticas-de-html-para-email-marketing-ajuda-locaweb/)
 - [17.5. About Wireshark - Software para Análise de Tráfego de Rede](https://www.wireshark.org/)
+- [18.3. Gerando a definição OpenAPI em JSON com SpringFox](https://springfox.github.io/springfox/)
+- [18.4. Api Documentation](http://localhost:8080/swagger-ui/index.html#/)
