@@ -3,14 +3,20 @@ package com.lduran.algafood.core.openapi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lduran.algafood.api.exceptionHandler.Problem;
+import com.lduran.algafood.api.model.CozinhaModel;
+import com.lduran.algafood.api.openapi.model.CozinhasModelOpenApi;
+import com.lduran.algafood.api.openapi.model.PageableModelOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.*;
+import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.Response;
@@ -37,7 +43,11 @@ import java.util.function.Consumer;
 				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
 				.additionalModels(typeResolver.resolve(Problem.class)).apiInfo(apiInfo())
-				.tags(new Tag("Cidades", "Gerencia as Cidades"));
+				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+				.alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Page.class, CozinhaModel.class),
+						                                       CozinhasModelOpenApi.class))
+				.tags(new Tag("Cidades", "Gerencia as Cidades"),
+					  new Tag("Grupos", "Gerencia os grupos de usuários"));
 	}
 
 	@Bean

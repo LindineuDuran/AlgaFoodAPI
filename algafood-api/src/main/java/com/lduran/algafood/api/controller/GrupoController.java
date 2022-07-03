@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.lduran.algafood.api.openapi.controller.GrupoControllerOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ import com.lduran.algafood.domain.service.CadastroGrupoService;
 
 @RestController
 @RequestMapping("/grupos")
-public class GrupoController
+public class GrupoController implements GrupoControllerOpenApi
 {
 	@Autowired
 	private CadastroGrupoService cadastroGrupo;
@@ -37,19 +39,19 @@ public class GrupoController
 	@Autowired
 	private GrupoInputModelDisassembler disassembler;
 
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<GrupoModel>> listar()
 	{
 		return ResponseEntity.ok(assembler.toCollectionModel(cadastroGrupo.listar()));
 	}
 
-	@GetMapping("/{grupoId}")
+	@GetMapping(path = "/{grupoId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public GrupoModel buscar(@PathVariable long grupoId)
 	{
 		return assembler.toModel(cadastroGrupo.buscar(grupoId));
 	}
 
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public GrupoModel adicionar(@RequestBody @Valid GrupoInputModel grupoInput)
 	{
@@ -57,7 +59,7 @@ public class GrupoController
 		return assembler.toModel(cadastroGrupo.salvar(grupo));
 	}
 
-	@PutMapping("/{grupoId}")
+	@PutMapping(path = "/{grupoId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public GrupoModel atualizar(@PathVariable long grupoId, @RequestBody @Valid GrupoInputModel grupoInput)
 	{
 		Grupo grupoAtual = cadastroGrupo.buscar(grupoId);
