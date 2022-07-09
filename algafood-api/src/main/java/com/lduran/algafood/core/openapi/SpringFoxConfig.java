@@ -4,8 +4,10 @@ import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.lduran.algafood.api.exceptionHandler.Problem;
 import com.lduran.algafood.api.model.CozinhaModel;
+import com.lduran.algafood.api.model.PedidoResumoModel;
 import com.lduran.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.lduran.algafood.api.openapi.model.PageableModelOpenApi;
+import com.lduran.algafood.api.openapi.model.PedidoResumoModelOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -38,26 +40,23 @@ import java.util.function.Consumer;
 
 		return new Docket(DocumentationType.OAS_30).select()
 				.apis(RequestHandlerSelectors.basePackage("com.lduran.algafood.api")).paths(PathSelectors.any()).build()
-				.useDefaultResponseMessages(false).globalResponses(HttpMethod.GET, globalGetResponseMessages())
+				.useDefaultResponseMessages(false)
+				.globalResponses(HttpMethod.GET, globalGetResponseMessages())
 				.globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
-				.globalRequestParameters(Collections.singletonList(new RequestParameterBuilder()
-						.name("campos")
-						.description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
-						.in(ParameterType.QUERY)
-						.required(true)
-						.query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
-						.build()))
 				.additionalModels(typeResolver.resolve(Problem.class)).apiInfo(apiInfo())
 				.ignoredParameterTypes(ServletWebRequest.class)
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 				.alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Page.class, CozinhaModel.class),
 						                                       CozinhasModelOpenApi.class))
+				.alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Page.class, PedidoResumoModel.class),
+															   PedidoResumoModelOpenApi.class))
 				.tags(new Tag("Cidades", "Gerencia as Cidades"),
 					  new Tag("Grupos", "Gerencia os grupos de usuários"),
 					  new Tag("Cozinhas", "Gerencia as Cozinhas"),
-					  new Tag("Formas de pagamento", "Gerencia as Formas de Pagamento"));
+					  new Tag("Formas de pagamento", "Gerencia as Formas de Pagamento"),
+					  new Tag("Pedidos", "Gerencia os Pedidos"));
 	}
 
 	@Bean

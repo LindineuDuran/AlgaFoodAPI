@@ -25,6 +25,7 @@
  - [9.5. Constraints do Bean Validation](https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/#section-builtin-constraints)
  - [9.15. Issue com "problema" de mensagens usando constraint composta](https://github.com/spring-projects/spring-framework/issues/20519)
  - [10.14. GitHub Gist da classe DatabaseCleaner](https://gist.github.com/thiagofa/cff61c709277f48a241c145116b92ec1)
+ - [13.3. Squiggly Filter For Jackson](https://github.com/bohnman/squiggly)
  - [13.17. Conhecendo o JasperSoft Studio](https://community.jaspersoft.com/)
  - [14.5. Mapeamento OneToOne bidirecional com Lazy Loading](https://blog.algaworks.com/lazy-loading-com-mapeamento-onetoone/)
  - [14.26. Annotation Type ConditionalOnProperty](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html)
