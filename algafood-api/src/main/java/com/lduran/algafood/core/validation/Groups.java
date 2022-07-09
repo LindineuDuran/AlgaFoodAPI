@@ -2,11 +2,11 @@ package com.lduran.algafood.core.validation;
 
 public interface Groups
 {
-	public interface CozinhaId
+	interface CozinhaId
 	{
 	}
 
-	public interface EstadoId
+	interface EstadoId
 	{
 	}
 }

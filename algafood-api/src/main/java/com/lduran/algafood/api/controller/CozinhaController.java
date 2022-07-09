@@ -1,35 +1,27 @@
 package com.lduran.algafood.api.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
+import com.lduran.algafood.api.assembler.CozinhaInputModelDisassembler;
+import com.lduran.algafood.api.assembler.CozinhaModelAssembler;
+import com.lduran.algafood.api.model.CozinhaModel;
+import com.lduran.algafood.api.model.input.CozinhaInputModel;
+import com.lduran.algafood.api.openapi.controller.CozinhaControllerOpenApi;
+import com.lduran.algafood.domain.model.Cozinha;
+import com.lduran.algafood.domain.service.CadastroCozinhaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.lduran.algafood.api.assembler.CozinhaInputModelDisassembler;
-import com.lduran.algafood.api.assembler.CozinhaModelAssembler;
-import com.lduran.algafood.api.model.CozinhaModel;
-import com.lduran.algafood.api.model.input.CozinhaInputModel;
-import com.lduran.algafood.domain.model.Cozinha;
-import com.lduran.algafood.domain.service.CadastroCozinhaService;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cozinhas")
-public class CozinhaController
+public class CozinhaController implements CozinhaControllerOpenApi
 {
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
@@ -46,7 +38,7 @@ public class CozinhaController
 		return ResponseEntity.ok(assembler.toCollectionModel(cadastroCozinha.listar()));
 	}
 
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public Page<CozinhaModel> listarPage(Pageable pageable)
 	{
 		Page<Cozinha> cozinhasPage = cadastroCozinha.listarPage(pageable);
@@ -58,13 +50,13 @@ public class CozinhaController
 		return cozinhasModelPage;
 	}
 
-	@GetMapping("/{cozinhaId}")
+	@GetMapping(value = "/{cozinhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CozinhaModel buscar(@PathVariable long cozinhaId)
 	{
 		return assembler.toModel(cadastroCozinha.buscar(cozinhaId));
 	}
 
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public CozinhaModel adicionar(@RequestBody @Valid CozinhaInputModel cozinhaInput)
 	{
@@ -72,7 +64,7 @@ public class CozinhaController
 		return assembler.toModel(cadastroCozinha.salvar(cozinha));
 	}
 
-	@PutMapping("/{cozinhaId}")
+	@PutMapping(value = "/{cozinhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CozinhaModel atualizar(@PathVariable long cozinhaId, @RequestBody @Valid CozinhaInputModel cozinhaInput)
 	{
 		Cozinha cozinhaAtual = cadastroCozinha.buscar(cozinhaId);
@@ -82,7 +74,7 @@ public class CozinhaController
 		return assembler.toModel(cadastroCozinha.salvar(cozinhaAtual));
 	}
 
-	@DeleteMapping("/{cozinhaId}")
+	@DeleteMapping(value = "/{cozinhaId}", produces = {})
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable long cozinhaId)
 	{

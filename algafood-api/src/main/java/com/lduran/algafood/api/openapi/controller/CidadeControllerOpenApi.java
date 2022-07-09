@@ -12,30 +12,30 @@ import java.util.List;
 public interface CidadeControllerOpenApi
 {
 	@ApiOperation("Listar as cidades")
-	public ResponseEntity<List<CidadeModel>> listar();
+	ResponseEntity<List<CidadeModel>> listar();
 
 	@ApiOperation("Buscar uma cidade por ID")
 	@ApiResponses({
 			@ApiResponse(code = 400, message = "ID da cidade inválido", response = Problem.class),
 			@ApiResponse(code = 404, message = "Cidade não encontrada", response = Problem.class)
 	})
-	public CidadeModel buscar(@ApiParam("ID de uma cidade") long cidadeId);
+	CidadeModel buscar(@ApiParam("ID de uma cidade") long cidadeId);
 
 	@ApiOperation("Adicionar uma nova cidade")
 	@ApiResponses({ @ApiResponse(code = 201, message = "Cidade cadastrada") })
-	public CidadeModel adicionar(CidadeInputModel cidadeInput);
+	CidadeModel adicionar(CidadeInputModel cidadeInput);
 
 	@ApiOperation("Atualizar uma cidade por ID")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Cidade atualizada"),
 			@ApiResponse(code = 404, message = "Cidade não encontrada", response = Problem.class)
 	})
-	public CidadeModel atualizar(@ApiParam("ID de uma cidade") long cidadeId, CidadeInputModel cidadeInput);
+	CidadeModel atualizar(@ApiParam("ID de uma cidade") long cidadeId, CidadeInputModel cidadeInput);
 
 	@ApiOperation("Remover uma cidade por ID")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Cidade excluida"),
 			@ApiResponse(code = 404, message = "Cidade não encontrada", response = Problem.class)
 	})
-	public void remover(@ApiParam("ID de uma cidade") long cidadeId);
+	void remover(@ApiParam("ID de uma cidade") long cidadeId);
 }

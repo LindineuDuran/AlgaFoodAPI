@@ -24,7 +24,7 @@ public class EmailProperties
 
 	public enum Implementacao
 	{
-		SMTP, FAKE, SANDBOX;
+		SMTP, FAKE, SANDBOX
 	}
 
 	@Getter

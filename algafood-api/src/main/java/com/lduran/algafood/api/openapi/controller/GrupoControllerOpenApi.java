@@ -19,30 +19,30 @@ import java.util.List;
 public interface GrupoControllerOpenApi
 {
 	@ApiOperation("Lista os grupos")
-	public ResponseEntity<List<GrupoModel>> listar();
+	ResponseEntity<List<GrupoModel>> listar();
 
 	@ApiOperation("Busca um grupo por ID")
 	@ApiResponses({
 			@ApiResponse(code = 400, message = "ID da grupo inválido", response = Problem.class),
 			@ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class)
 	})
-	public GrupoModel buscar(long grupoId);
+	GrupoModel buscar(long grupoId);
 
 	@ApiOperation("Cadastra um grupo")
 	@ApiResponses({@ApiResponse(code = 201, message = "Grupo cadastrado")})
-	public GrupoModel adicionar(GrupoInputModel grupoInput);
+	GrupoModel adicionar(GrupoInputModel grupoInput);
 
 	@ApiOperation("Atualiza um grupo por ID")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Grupo atualizado"),
 			@ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class)
 	})
-	public GrupoModel atualizar(long grupoId, GrupoInputModel grupoInput);
+	GrupoModel atualizar(long grupoId, GrupoInputModel grupoInput);
 
 	@ApiOperation("Exclui um grupo por ID")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Grupo excluído"),
 			@ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class)
 	})
-	public void remover(long grupoId);
+	void remover(long grupoId);
 }

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.context.request.ServletWebRequest;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
@@ -43,11 +44,14 @@ import java.util.function.Consumer;
 				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
 				.additionalModels(typeResolver.resolve(Problem.class)).apiInfo(apiInfo())
+				.ignoredParameterTypes(ServletWebRequest.class)
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 				.alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Page.class, CozinhaModel.class),
 						                                       CozinhasModelOpenApi.class))
 				.tags(new Tag("Cidades", "Gerencia as Cidades"),
-					  new Tag("Grupos", "Gerencia os grupos de usuários"));
+					  new Tag("Grupos", "Gerencia os grupos de usuários"),
+					  new Tag("Cozinhas", "Gerencia as Cozinhas"),
+					  new Tag("Formas de pagamento", "Gerencia as Formas de Pagamento"));
 	}
 
 	@Bean

@@ -52,7 +52,7 @@ public class CadastroCozinhaIT
 
 	private Cozinha cozinhaAmericana;
 
-	private int COZINHA_ID_INEXISTENTE = 100;
+	private final int COZINHA_ID_INEXISTENTE = 100;
 
 	@Autowired
 	private DatabaseCleaner databaseCleaner;
@@ -186,6 +186,6 @@ public class CadastroCozinhaIT
 		var cozinhas = cadastroCozinha.listar();
 		quantidadeCozinhas = cozinhas.size();
 
-		novaCozinha = resourceUtils.getContentFromResource("/json/correto/cozinha-chinesa.json");
+		novaCozinha = ResourceUtils.getContentFromResource("/json/correto/cozinha-chinesa.json");
 	}
 }

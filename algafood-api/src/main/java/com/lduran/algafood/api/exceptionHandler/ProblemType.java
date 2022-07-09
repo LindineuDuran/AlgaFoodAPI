@@ -12,14 +12,14 @@ public enum ProblemType
 	PARAMETRO_INVALIDO("/parametro-invalido", "Parâmetro invalido"),
 	RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "Recurso não encontrado");
 
-	private String title;
-	private String uri;
+	private final String title;
+	private final String uri;
 
 	/**
 	 * @param title
 	 * @param uri
 	 */
-	private ProblemType(String path, String title)
+	ProblemType(String path, String title)
 	{
 		this.uri = "https://algafood.com.br" + path;
 		this.title = title;

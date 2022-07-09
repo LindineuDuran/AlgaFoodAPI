@@ -26,7 +26,7 @@ public interface FotoStorageService
 
 	default String gerarNomeArquivo(String nomeOriginal)
 	{
-		return UUID.randomUUID().toString() + "_" + nomeOriginal;
+		return UUID.randomUUID() + "_" + nomeOriginal;
 	}
 
 	@Builder

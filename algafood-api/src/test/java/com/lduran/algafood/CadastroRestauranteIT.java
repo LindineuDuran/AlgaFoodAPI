@@ -64,16 +64,16 @@ public class CadastroRestauranteIT
 		RestAssured.port = port;
 		RestAssured.basePath = "/restaurantes";
 
-		jsonRestauranteCorreto = resourceUtils
+		jsonRestauranteCorreto = ResourceUtils
 				.getContentFromResource("/json/correto/restaurante-new-york-barbecue.json");
 
-		jsonRestauranteSemFrete = resourceUtils
+		jsonRestauranteSemFrete = ResourceUtils
 				.getContentFromResource("/json/incorreto/restaurante-new-york-barbecue-sem-frete.json");
 
-		jsonRestauranteSemCozinha = resourceUtils
+		jsonRestauranteSemCozinha = ResourceUtils
 				.getContentFromResource("/json/incorreto/restaurante-new-york-barbecue-sem-cozinha.json");
 
-		jsonRestauranteComCozinhaInexistente = resourceUtils
+		jsonRestauranteComCozinhaInexistente = ResourceUtils
 				.getContentFromResource("/json/incorreto/restaurante-new-york-barbecue-com-cozinha-inexistente.json");
 
 		databaseCleaner.clearTables();

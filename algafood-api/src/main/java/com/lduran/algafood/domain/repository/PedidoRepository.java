@@ -14,7 +14,7 @@ public interface PedidoRepository extends CustomJpaRepository<Pedido, Long>, Jpa
 {
 	@Override
 	@Query("from Pedido p join fetch p.cliente join fetch p.restaurante r join fetch r.cozinha")
-	public List<Pedido> findAll();
+	List<Pedido> findAll();
 
-	public Optional<Pedido> findByCodigo(String codigo);
+	Optional<Pedido> findByCodigo(String codigo);
 }
