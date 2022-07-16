@@ -16,31 +16,30 @@ public interface RestauranteControllerOpenApi
 {
 	@ApiOperation(value = "Lista restaurantes", response = RestauranteBasicoModelOpenApi.class)
 	@ApiImplicitParams({
-			@ApiImplicitParam(value = "Nome da projeção de pedidos", allowableValues = "apenas-nome",
-					          name = "projecao", paramType = "query", type = "string")
+			@ApiImplicitParam(value = "Nome da projeção de pedidos", name = "projecao",
+					          paramType = "query", allowableValues = "apenas-nome", dataTypeClass = String.class)
 	})
 	@JsonView(RestauranteView.Resumo.class)
 	public ResponseEntity<List<RestauranteModel>> listar();
 
-	//@JsonView(RestauranteView.ApenasNome.class)
 	@ApiOperation(value = "Lista restaurantes", hidden = true)
 	public ResponseEntity<List<RestauranteModel>> listarApenasNomes();
 
-	@ApiOperation("Busca um restaurante por ID")
+	@ApiOperation("Buscar um restaurante por ID")
 	@ApiResponses({
 			@ApiResponse(code = 400, message = "ID do restaurante inválido", response = Problem.class),
 			@ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
 	})
 	public RestauranteModel buscar(@ApiParam(value = "ID de um restaurante", example = "1", required = true) Long restauranteId);
 
-	@ApiOperation("Cadastra um restaurante")
+	@ApiOperation("Cadastrar um restaurante")
 	@ApiResponses({
 			@ApiResponse(code = 201, message = "Restaurante cadastrado"),
 	})
 	public RestauranteModel adicionar(@ApiParam(name = "corpo", value = "Representação de um novo restaurante", required = true)
 	 								  RestauranteInputModel restauranteInput);
 
-	@ApiOperation("Atualiza um restaurante por ID")
+	@ApiOperation("Atualizar um restaurante por ID")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Restaurante atualizado"),
 			@ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
@@ -58,35 +57,35 @@ public interface RestauranteControllerOpenApi
 	})
 	public void remover(Long restauranteId);
 
-	@ApiOperation("Ativa um restaurante por ID")
+	@ApiOperation("Ativar um restaurante por ID")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Restaurante ativado com sucesso"),
 			@ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
 	})
 	public void ativar(@ApiParam(value = "ID de um restaurante", example = "1", required = true) Long restauranteId);
 
-	@ApiOperation("Ativa múltiplos restaurantes")
+	@ApiOperation("Ativar múltiplos restaurantes")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Restaurantes ativados com sucesso")
 	})
 	public void ativarMultiplos(@ApiParam(name = "corpo", value = "IDs de restaurantes", required = true)
 						         List<Long> restauranteIds);
 
-	@ApiOperation("Inativa um restaurante por ID")
+	@ApiOperation("Inativar um restaurante por ID")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Restaurante inativado com sucesso"),
 			@ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
 	})
 	public void inativar(@ApiParam(value = "ID de um restaurante", example = "1", required = true) Long restauranteId);
 
-	@ApiOperation("Inativa múltiplos restaurantes")
+	@ApiOperation("Inativar múltiplos restaurantes")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Restaurantes ativados com sucesso")
 	})
 	public void inativarMultiplos(@ApiParam(name = "corpo", value = "IDs de restaurantes", required = true)
 							      List<Long> restauranteIds);
 
-	@ApiOperation("Abre um restaurante por ID")
+	@ApiOperation("Abrir um restaurante por ID")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Restaurante aberto com sucesso"),
 			@ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)
@@ -94,7 +93,7 @@ public interface RestauranteControllerOpenApi
 	public void abrir(@ApiParam(value = "ID de um restaurante", example = "1", required = true)
 					  Long restauranteId);
 
-	@ApiOperation("Fecha um restaurante por ID")
+	@ApiOperation("Fechar um restaurante por ID")
 	@ApiResponses({
 			@ApiResponse(code = 204, message = "Restaurante fechado com sucesso"),
 			@ApiResponse(code = 404, message = "Restaurante não encontrado", response = Problem.class)

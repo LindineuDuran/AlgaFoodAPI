@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import com.lduran.algafood.api.openapi.controller.RestauranteControllerOpenApi;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.flywaydb.core.internal.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,6 @@ import com.lduran.algafood.domain.exception.ValidacaoException;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.service.CadastroRestauranteService;
 
-//@Api(tags = "Restaurantes")
 @RestController
 @RequestMapping("/restaurantes")
 public class RestauranteController implements RestauranteControllerOpenApi
