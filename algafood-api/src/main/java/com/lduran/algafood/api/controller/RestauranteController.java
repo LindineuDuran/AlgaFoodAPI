@@ -7,9 +7,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.lduran.algafood.api.openapi.controller.RestauranteControllerOpenApi;
+import io.swagger.annotations.Api;
 import org.flywaydb.core.internal.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -43,9 +46,10 @@ import com.lduran.algafood.domain.exception.ValidacaoException;
 import com.lduran.algafood.domain.model.Restaurante;
 import com.lduran.algafood.domain.service.CadastroRestauranteService;
 
+//@Api(tags = "Restaurantes")
 @RestController
 @RequestMapping("/restaurantes")
-public class RestauranteController
+public class RestauranteController implements RestauranteControllerOpenApi
 {
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
@@ -60,55 +64,20 @@ public class RestauranteController
 	private RestauranteInputModelDisassembler disassembler;
 
 	@JsonView(RestauranteView.Resumo.class)
-	@GetMapping
-	public ResponseEntity<List<RestauranteModel>> listarResumido()
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<RestauranteModel>> listar()
 	{
 		return ResponseEntity.ok(assembler.toCollectionModel(cadastroRestaurante.listar()));
 	}
 
 	@JsonView(RestauranteView.ApenasNome.class)
-	@GetMapping(params = "projecao=apenas-nome")
+	@GetMapping(params = "projecao=apenas-nome", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RestauranteModel>> listarApenasNomes()
 	{
 		return ResponseEntity.ok(assembler.toCollectionModel(cadastroRestaurante.listar()));
 	}
 
-//	@GetMapping
-//	public ResponseEntity<List<RestauranteModel>> listar()
-//	{
-//		return ResponseEntity.ok(assembler.toCollectionModel(cadastroRestaurante.listar()));
-//	}
-
-//	@JsonView(RestauranteView.Resumo.class)
-//	@GetMapping(params = "projecao=resumo")
-//	public ResponseEntity<List<RestauranteModel>> listarResumido()
-//	{
-//		return ResponseEntity.ok(assembler.toCollectionModel(cadastroRestaurante.listar()));
-//	}
-
-//	@GetMapping
-//	public MappingJacksonValue listar(@RequestParam(required = false) String projecao)
-//	{
-//		List<Restaurante> restaurantes = cadastroRestaurante.listar();
-//		List<RestauranteModel> restauranteModel = assembler.toCollectionModel(restaurantes);
-//
-//		MappingJacksonValue restauranteWrapper = new MappingJacksonValue(restauranteModel);
-//
-//		restauranteWrapper.setSerializationView(RestauranteView.Resumo.class);
-//
-//		if ("apenas-nome".equals(projecao))
-//		{
-//			restauranteWrapper.setSerializationView(RestauranteView.ApenasNome.class);
-//		}
-//		else if ("completo".equals(projecao))
-//		{
-//			restauranteWrapper.setSerializationView(null);
-//		}
-//
-//		return restauranteWrapper;
-//	}
-
-	@GetMapping("/{restauranteId}")
+	@GetMapping(path = "/{restauranteId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public RestauranteModel buscar(@PathVariable Long restauranteId)
 	{
 		Restaurante restaurante = cadastroRestaurante.buscar(restauranteId);
@@ -116,7 +85,7 @@ public class RestauranteController
 		return assembler.toModel(restaurante);
 	}
 
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public RestauranteModel adicionar(@RequestBody @Valid RestauranteInputModel restauranteInput)
 	{
@@ -131,7 +100,7 @@ public class RestauranteController
 		}
 	}
 
-	@PutMapping("/{restauranteId}")
+	@PutMapping(path = "/{restauranteId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public RestauranteModel atualizar(@PathVariable Long restauranteId,
 			@RequestBody @Valid RestauranteInputModel restauranteInput)
 	{
@@ -149,7 +118,7 @@ public class RestauranteController
 		}
 	}
 
-	@PatchMapping("/{restauranteId}")
+	@PatchMapping(path = "/{restauranteId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public RestauranteModel atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos,
 			HttpServletRequest request)
 	{
