@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.lduran.algafood.api.openapi.controller.EstadoControllerOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +28,7 @@ import com.lduran.algafood.domain.service.CadastroEstadoService;
 
 @RestController
 @RequestMapping("/estados")
-public class EstadoController
+public class EstadoController implements EstadoControllerOpenApi
 {
 	@Autowired
 	private CadastroEstadoService cadastroEstado;
@@ -37,21 +39,21 @@ public class EstadoController
 	@Autowired
 	private EstadoInputModelDisassembler disassembler;
 
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<EstadoModel>> listar()
 	{
 		List<Estado> estados = cadastroEstado.listar();
 		return ResponseEntity.ok(assembler.toCollectionModel(estados));
 	}
 
-	@GetMapping("/{estadoId}")
+	@GetMapping(path = "/{estadoId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstadoModel buscar(@PathVariable long estadoId)
 	{
 		Estado estado = cadastroEstado.buscar(estadoId);
 		return assembler.toModel(estado);
 	}
 
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<EstadoModel> adicionar(@RequestBody @Valid EstadoInputModel estadoInput)
 	{
@@ -59,7 +61,7 @@ public class EstadoController
 		return ResponseEntity.ok(assembler.toModel(cadastroEstado.salvar(estado)));
 	}
 
-	@PutMapping("/{estadoId}")
+	@PutMapping(path = "/{estadoId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstadoModel atualizar(@PathVariable long estadoId, @RequestBody @Valid EstadoInputModel estadoInput)
 	{
 		Estado estadoAtual = cadastroEstado.buscar(estadoId);

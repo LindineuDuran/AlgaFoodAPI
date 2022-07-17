@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.lduran.algafood.api.openapi.controller.RestauranteProdutoControllerOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,7 @@ import com.lduran.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos")
-public class RestauranteProdutoController
+public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi
 {
 	@Autowired
 	private CadastroProdutoService cadastroProduto;
@@ -42,7 +44,7 @@ public class RestauranteProdutoController
 	@Autowired
 	private ProdutoInputModelDisassembler disassembler;
 
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProdutoModel>> listar(@PathVariable Long restauranteId,
 			@RequestParam(required = false) boolean incluirInativos)
 	{
@@ -61,13 +63,13 @@ public class RestauranteProdutoController
 		return ResponseEntity.ok(assembler.toCollectionModel(todosProdutos));
 	}
 
-	@GetMapping("/{produtoId}")
+	@GetMapping(path = "/{produtoId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId)
 	{
 		return assembler.toModel(cadastroProduto.buscar(restauranteId, produtoId));
 	}
 
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel adicionar(@PathVariable Long restauranteId, @RequestBody @Valid ProdutoInputModel produtoInput)
 	{
@@ -81,7 +83,7 @@ public class RestauranteProdutoController
 		return assembler.toModel(produto);
 	}
 
-	@PutMapping("/{produtoId}")
+	@PutMapping(path = "/{produtoId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ProdutoModel atualizar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestBody @Valid ProdutoInputModel produtoInput)
 	{

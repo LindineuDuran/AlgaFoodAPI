@@ -1,5 +1,6 @@
 package com.lduran.algafood.api.controller;
 
+import com.lduran.algafood.api.openapi.controller.FluxoPedidoControllerOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,7 @@ import com.lduran.algafood.domain.service.FluxoPedidoService;
 
 @RestController
 @RequestMapping("/pedidos/{codigoPedido}")
-public class FluxoPedidoController
+public class FluxoPedidoController implements FluxoPedidoControllerOpenApi
 {
 	@Autowired
 	private FluxoPedidoService fluxoPedidoService;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.lduran.algafood.api.openapi.controller.RestauranteProdutoFotoControllerOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ import com.lduran.algafood.domain.service.FotoStorageService.FotoRecuperada;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
-public class RestauranteProdutoFotoController
+public class RestauranteProdutoFotoController implements RestauranteProdutoFotoControllerOpenApi
 {
 	@Autowired
 	private CadastroProdutoService cadastroProduto;
@@ -49,7 +50,7 @@ public class RestauranteProdutoFotoController
 	@Autowired
 	private FotoProdutoModelAssembler assembler;
 
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping
 	public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId)
 	{
 		FotoProduto fotoProduto = catalogoFotoProduto.buscar(restauranteId, produtoId);
@@ -57,7 +58,7 @@ public class RestauranteProdutoFotoController
 		return assembler.toModel(fotoProduto);
 	}
 
-	@GetMapping
+	@GetMapping(produces = MediaType.ALL_VALUE)
 	public ResponseEntity<?> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
 			@RequestHeader(name = "accept") String acceptHeader) throws HttpMediaTypeNotAcceptableException
 	{

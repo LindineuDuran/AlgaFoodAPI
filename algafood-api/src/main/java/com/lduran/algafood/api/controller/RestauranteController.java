@@ -1,15 +1,17 @@
 package com.lduran.algafood.api.controller;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lduran.algafood.api.assembler.RestauranteInputModelDisassembler;
+import com.lduran.algafood.api.assembler.RestauranteModelAssembler;
+import com.lduran.algafood.api.model.RestauranteModel;
+import com.lduran.algafood.api.model.input.RestauranteInputModel;
+import com.lduran.algafood.api.model.view.RestauranteView;
 import com.lduran.algafood.api.openapi.controller.RestauranteControllerOpenApi;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.lduran.algafood.domain.exception.*;
+import com.lduran.algafood.domain.model.Restaurante;
+import com.lduran.algafood.domain.service.CadastroRestauranteService;
 import org.flywaydb.core.internal.util.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,32 +22,13 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lduran.algafood.api.assembler.RestauranteInputModelDisassembler;
-import com.lduran.algafood.api.assembler.RestauranteModelAssembler;
-import com.lduran.algafood.api.model.RestauranteModel;
-import com.lduran.algafood.api.model.input.RestauranteInputModel;
-import com.lduran.algafood.api.model.view.RestauranteView;
-import com.lduran.algafood.domain.exception.CidadeNaoEncontradaException;
-import com.lduran.algafood.domain.exception.CozinhaNaoEncontradaException;
-import com.lduran.algafood.domain.exception.NegocioException;
-import com.lduran.algafood.domain.exception.RestauranteNaoEncontradoException;
-import com.lduran.algafood.domain.exception.ValidacaoException;
-import com.lduran.algafood.domain.model.Restaurante;
-import com.lduran.algafood.domain.service.CadastroRestauranteService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -116,19 +99,6 @@ public class RestauranteController implements RestauranteControllerOpenApi
 		{
 			throw new NegocioException(e.getMessage());
 		}
-	}
-
-	@PatchMapping(path = "/{restauranteId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public RestauranteModel atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos,
-			HttpServletRequest request)
-	{
-		Restaurante restauranteAtual = cadastroRestaurante.buscar(restauranteId);
-
-		merge(campos, restauranteAtual, request);
-
-		validate(restauranteAtual, "restaurante");
-
-		return atualizar(restauranteId, assembler.toInputModel(restauranteAtual));
 	}
 
 	@DeleteMapping("/{restauranteId}")

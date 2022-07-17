@@ -2,8 +2,10 @@ package com.lduran.algafood.api.controller;
 
 import java.util.List;
 
+import com.lduran.algafood.api.openapi.controller.RestauranteFormaPagamentoControllerOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,7 @@ import com.lduran.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/formas-pagamento")
-public class RestauranteFormaPagamentoController
+public class RestauranteFormaPagamentoController implements RestauranteFormaPagamentoControllerOpenApi
 {
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
@@ -28,7 +30,7 @@ public class RestauranteFormaPagamentoController
 	@Autowired
 	private FormaPagamentoModelAssembler assembler;
 
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<FormaPagamentoModel>> listar(@PathVariable Long restauranteId)
 	{
 		Restaurante restaurante = cadastroRestaurante.buscar(restauranteId);

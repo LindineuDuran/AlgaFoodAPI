@@ -57,7 +57,9 @@ import java.util.function.Consumer;
 					  new Tag("Cozinhas", "Gerencia as Cozinhas"),
 					  new Tag("Formas de pagamento", "Gerencia as Formas de Pagamento"),
 					  new Tag("Pedidos", "Gerencia os Pedidos"),
-					  new Tag("Restaurantes", "Gerencia os Restaurantes"));
+					  new Tag("Restaurantes", "Gerencia os Restaurantes"),
+					  new Tag("Estados", "Gerencia os Estados"),
+					  new Tag("Produtos", "Gerencia os Produtos de Restaurantes"));
 	}
 
 	@Bean
